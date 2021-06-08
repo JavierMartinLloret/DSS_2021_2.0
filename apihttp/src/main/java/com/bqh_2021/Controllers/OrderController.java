@@ -1,4 +1,4 @@
-package com.BQH_2021.API_HTTP.Controllers;
+package com.bqh_2021.Controllers;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -8,13 +8,13 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import com.BQH_2021.API_HTTP.ApiApplication;
-import com.BQH_2021.API_HTTP.Servicios.SendEmailService;
-import com.BQH_2021.Negocio.Entidades.Clases.Cafeteria;
-import com.BQH_2021.Negocio.Entidades.Clases.Order;
-import com.BQH_2021.Negocio.Entidades.Clases.OrderWithUserAndDate;
-import com.BQH_2021.Negocio.Entidades.Clases.User;
-import com.BQH_2021.Negocio.Entidades.Interfaces.IProduct;
+import com.bqh_2021.ApiApplication;
+import com.bqh_2021.Entidades.Clases.Cafeteria;
+import com.bqh_2021.Entidades.Clases.Order;
+import com.bqh_2021.Entidades.Clases.OrderWithUserAndDate;
+import com.bqh_2021.Entidades.Clases.User;
+import com.bqh_2021.Entidades.Interfaces.IProduct;
+import com.bqh_2021.Servicios.SendEmailService;
 
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;

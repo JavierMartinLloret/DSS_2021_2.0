@@ -1,0 +1,19 @@
+[
+    {
+        "orders": [
+            {
+                "date": "Fri Jun 04 11:18:51 WEST 2021",
+                "orderID": 1,
+                "client": "juanca@gmail.com",
+                "placeOfOrder": "campus@gmail.com"
+            },
+            {
+                "date": "Fri Jun 04 11:18:51 WEST 2021",
+                "orderID": 2,
+                "client": "juanca@gmail.com",
+                "placeOfOrder": "campus@gmail.com"
+            }
+        ],
+        "user": "juanca@gmail.com"
+    }
+]

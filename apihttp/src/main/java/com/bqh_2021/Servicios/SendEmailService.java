@@ -1,4 +1,4 @@
-package com.BQH_2021.API_HTTP.Servicios;
+package com.bqh_2021.Servicios;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

@@ -1,4 +1,4 @@
-package com.BQH_2021.API_HTTP.Requests;
+package com.bqh_2021.Requests;
 
 import java.util.Date;
 import java.util.Map;

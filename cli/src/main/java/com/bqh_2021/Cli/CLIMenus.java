@@ -1,14 +1,17 @@
-package com.BQH_2021.AppCli.Frontend;
+package com.bqh_2021.Cli;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 import java.util.SortedSet;
+
+import com.bqh_2021.Entidades.Clases.BQH;
+import com.bqh_2021.Entidades.Clases.Order;
+import com.bqh_2021.Entidades.Interfaces.IProduct;
+
 import java.lang.Character;
 
-import com.BQH_2021.Negocio.Entidades.Clases.*;
-import com.BQH_2021.Negocio.Entidades.Interfaces.IProduct;
 
 /**
  * CLIMenus

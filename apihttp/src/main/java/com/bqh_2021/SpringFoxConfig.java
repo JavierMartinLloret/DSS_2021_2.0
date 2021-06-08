@@ -1,4 +1,4 @@
-package com.BQH_2021.API_HTTP;
+package com.bqh_2021;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

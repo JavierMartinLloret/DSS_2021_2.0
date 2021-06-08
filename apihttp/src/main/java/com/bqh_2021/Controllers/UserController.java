@@ -1,10 +1,10 @@
-package com.BQH_2021.API_HTTP.Controllers;
+package com.bqh_2021.Controllers;
 
 import java.util.Set;
 
-import com.BQH_2021.API_HTTP.Requests.UserRequest;
-import com.BQH_2021.Negocio.Entidades.Clases.User;
-import com.BQH_2021.Negocio.Servicios.UserService;
+import com.bqh_2021.Entidades.Clases.User;
+import com.bqh_2021.Requests.UserRequest;
+import com.bqh_2021.Servicios.UserService;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

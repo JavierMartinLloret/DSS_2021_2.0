@@ -1,0 +1,18 @@
+[
+    {
+        "price": 15.0,
+        "id": 1,
+        "orderItems": {
+            "Agua  (0.7\u20AC)": 2,
+            "Monster  (1.7\u20AC)": 8
+        }
+    },
+    {
+        "price": 3.1,
+        "id": 2,
+        "orderItems": {
+            "Agua (0.7\u20AC)": 2,
+            "Monster (1.7\u20AC)": 1
+        }
+    }
+]

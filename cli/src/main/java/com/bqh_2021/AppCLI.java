@@ -4,10 +4,12 @@ package com.bqh_2021;
  * Esta rutina define el comportamiento del CLI del hito 2
  *
  */
-import com.BQH_2021.AppCli.Frontend.CLIMenus;
-import com.BQH_2021.Negocio.Entidades.Clases.BQH;
+
 
 import java.util.Scanner;
+
+import com.bqh_2021.Cli.CLIMenus;
+import com.bqh_2021.Entidades.Clases.BQH;
 
 public class AppCLI 
 {

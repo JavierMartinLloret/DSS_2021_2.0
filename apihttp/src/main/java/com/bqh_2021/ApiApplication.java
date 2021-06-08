@@ -1,10 +1,10 @@
-package com.BQH_2021.API_HTTP;
+package com.bqh_2021;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import com.BQH_2021.Negocio.Entidades.Clases.Cafeteria;
-import com.BQH_2021.Negocio.Servicios.CafeteriaIDService;
+import com.bqh_2021.Entidades.Clases.Cafeteria;
+import com.bqh_2021.Servicios.CafeteriaIDService;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
