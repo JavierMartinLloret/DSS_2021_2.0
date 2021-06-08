@@ -1,0 +1,9 @@
+PUT http://localhost:8080/users
+Content-Type: application/json
+
+{
+    "email": "juanca@gmail.com",
+    "nickname": "juanca",
+    "isAdult": true,
+    "password": "akfsdfkds"
+}

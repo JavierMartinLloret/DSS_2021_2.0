@@ -1,0 +1,8 @@
+DELETE  http://localhost:8080/orders
+Content-Type: application/json
+
+{
+    "cafeteria": "esi@gmail.com",
+    "user": "juanca@gmail.com",
+    "orderID": 1
+}

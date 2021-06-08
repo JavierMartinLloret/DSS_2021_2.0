@@ -1,0 +1,12 @@
+PUT http://localhost:8080/orders
+Content-Type: application/json
+
+{
+    "cafeteria": "esi@gmail.com",
+    "user": "juanca@gmail.com",
+    "exist": false,
+    "orderID": 1,
+    "order":{
+        "Agua": 2
+    }
+}

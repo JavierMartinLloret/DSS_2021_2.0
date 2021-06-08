@@ -1,0 +1,10 @@
+POST http://localhost:8080/orders
+Content-Type: application/json
+
+{
+    "email": "juanca@gmail.com",
+    "cafeteria": "esi@gmail.com",
+    "date": "Fri Jun 22 11:18:51 WEST 2021"
+}
+
+###
