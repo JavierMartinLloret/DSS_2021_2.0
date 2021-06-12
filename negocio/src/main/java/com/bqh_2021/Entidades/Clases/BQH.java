@@ -7,9 +7,9 @@ import java.util.Set;
 import java.util.SortedSet;
 
 import com.bqh_2021.Entidades.Interfaces.IProduct;
-import com.bqh_2021.Servicios.OrderService;
-import com.bqh_2021.Servicios.ProdCategoryService;
-import com.bqh_2021.Servicios.ProductService;
+import com.bqh_2021.File_DAO.OrderService;
+import com.bqh_2021.File_DAO.ProdCategoryService;
+import com.bqh_2021.File_DAO.ProductService;
 
 
 /**

@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.bqh_2021.Entidades.Interfaces.IProduct;
-import com.bqh_2021.Servicios.CafeteriaService;
+import com.bqh_2021.File_DAO.CafeteriaService;
 
 public class Cafeteria {
 

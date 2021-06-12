@@ -1,6 +1,6 @@
 package com.bqh_2021.Entidades.Clases;
 
-import com.bqh_2021.Servicios.UserService;
+import com.bqh_2021.File_DAO.UserService;
 
 /**
  * User
