@@ -30,7 +30,7 @@ public class FileOrderDAO implements IOrderDAO{
     }
 
     @Override
-    public Set<Order> GetOrders() {
+    public Set<Order> getOrders() {
         Set<Order> set = new HashSet<Order>();
         JSONParser jsonParser = new JSONParser();
         try (FileReader reader = new FileReader(f)){
@@ -60,7 +60,7 @@ public class FileOrderDAO implements IOrderDAO{
     }
 
     @Override
-    public void PostOrders(Set<Order> set) {
+    public void postOrders(Set<Order> set) {
         JSONArray array = new JSONArray();
         try (FileWriter writer = new FileWriter(f)){
             for (Order o: set){

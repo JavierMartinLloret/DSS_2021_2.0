@@ -1,4 +1,4 @@
-package com.bqh_2021.Repositorios;
+package com.bqh_2021.Abstract_Factory_DAO.File_DAO;
 
 
 import java.io.File;
@@ -6,25 +6,26 @@ import java.io.FileReader;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import com.bqh_2021.Abstract_Factory_DAO.Interfaces.IProdCategoryDAO;
 import com.bqh_2021.Utils.PropertiesReader;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-public class ProdCategoryRepositoryFile{
+public class FileProdCategoryDAO implements IProdCategoryDAO{
 
     protected File f = new File(PropertiesReader.getInstance().getProperty("prodCategory.file"));
     
-    private static final ProdCategoryRepositoryFile SINGLE_INSTANCE = new ProdCategoryRepositoryFile();
+    private static final FileProdCategoryDAO SINGLE_INSTANCE = new FileProdCategoryDAO();
     
-    public ProdCategoryRepositoryFile(){}
+    public FileProdCategoryDAO(){}
 
-    public static ProdCategoryRepositoryFile getInstance(){
+    public static FileProdCategoryDAO getInstance(){
         return SINGLE_INSTANCE;
     }
 
-    public SortedSet<String> GetCategories(){       
+    public SortedSet<String> getCategories(){       
         SortedSet<String> set= new TreeSet<String>();
         JSONParser jsonParser = new JSONParser();
         try (FileReader reader = new FileReader(f)){

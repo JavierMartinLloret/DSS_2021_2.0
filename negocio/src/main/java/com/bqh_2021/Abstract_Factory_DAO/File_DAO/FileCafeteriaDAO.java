@@ -1,4 +1,4 @@
-package com.bqh_2021.Repositorios;
+package com.bqh_2021.Abstract_Factory_DAO.File_DAO;
 
 import java.io.File;
 import java.io.FileReader;
@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import com.bqh_2021.Abstract_Factory_DAO.Interfaces.ICafeteriaDAO;
 import com.bqh_2021.Entidades.Clases.Cafeteria;
 import com.bqh_2021.Entidades.Clases.OrderWithUserAndDate;
 import com.bqh_2021.Entidades.Clases.User;
@@ -20,17 +21,17 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-public class CafeteriaRepositoryFile {
+public class FileCafeteriaDAO implements ICafeteriaDAO{
     
     protected File f;
 
     protected static String cafeteria = PropertiesReader.getInstance().getProperty("cafeteria.file");
     
-    public CafeteriaRepositoryFile(String id){
+    public FileCafeteriaDAO(String id){
         f = new File(cafeteria + id + ".json");
     }
 
-    public Map<String, List<OrderWithUserAndDate>> GetOrders(){       
+    public Map<String, List<OrderWithUserAndDate>> getOrders(){       
         Map<String, List<OrderWithUserAndDate>> map = new HashMap<String, List<OrderWithUserAndDate>>();
         JSONParser jsonParser = new JSONParser();
         try (FileReader reader = new FileReader(f)){
@@ -52,7 +53,7 @@ public class CafeteriaRepositoryFile {
         return map;
     }
 
-    public void PostOrders(Map<String, List<OrderWithUserAndDate>> map){
+    public void postOrders(Map<String, List<OrderWithUserAndDate>> map){
         JSONArray array = new JSONArray();
         try (FileWriter writer = new FileWriter(f)){
             for (String s: map.keySet()){

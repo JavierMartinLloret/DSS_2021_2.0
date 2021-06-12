@@ -1,4 +1,4 @@
-package com.bqh_2021.Repositorios;
+package com.bqh_2021.Abstract_Factory_DAO.File_DAO;
 
 import java.io.File;
 import java.io.FileReader;
@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.bqh_2021.Abstract_Factory_DAO.Interfaces.IProductDAO;
 import com.bqh_2021.Entidades.Clases.Menu;
 import com.bqh_2021.Entidades.Clases.Product;
 import com.bqh_2021.Entidades.Interfaces.IProduct;
@@ -17,17 +18,17 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-public class ProductRepositoryFile{
+public class FileProductDAO implements IProductDAO{
 
     protected static File f;
     protected static String product = PropertiesReader.getInstance().getProperty("product.file");
     
     
-    public ProductRepositoryFile(String kitchenEmail){
+    public FileProductDAO(String kitchenEmail){
         f = new File(product + kitchenEmail + ".json");
     }
 
-    public HashMap<String, List<IProduct>> GetProducts(){       
+    public HashMap<String, List<IProduct>> getProducts(){       
         HashMap<String, List<IProduct>>  map = new HashMap<String, List<IProduct>>();
         JSONParser jsonParser = new JSONParser();
         try (FileReader reader = new FileReader(f)){
@@ -69,7 +70,7 @@ public class ProductRepositoryFile{
         return map;
     }
 
-    public void PostProducts(HashMap<String, List<IProduct>> map){
+    public void postProducts(HashMap<String, List<IProduct>> map){
         JSONArray array = new JSONArray();
         try (FileWriter writer = new FileWriter(f)){
             for (List<IProduct> l: map.values()){

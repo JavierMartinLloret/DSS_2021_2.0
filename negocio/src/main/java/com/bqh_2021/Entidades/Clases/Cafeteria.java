@@ -8,8 +8,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.bqh_2021.Abstract_Factory_DAO.File_DAO.CafeteriaService;
+import com.bqh_2021.Abstract_Factory_DAO.Interfaces.ICafeteriaDAO;
+import com.bqh_2021.Abstract_Factory_DAO.Interfaces.IFactoryDAO;
 import com.bqh_2021.Entidades.Interfaces.IProduct;
+import com.bqh_2021.Utils.PersistenceConfiguration;
 
 public class Cafeteria {
 
@@ -19,7 +21,7 @@ public class Cafeteria {
     protected Map<String, List<OrderWithUserAndDate>> currentOpenedOrders; // Histórico de pedidos para la persistencia
     protected Map<String, List<OrderWithUserAndDate>> orderArchive; // Histórico de pedidos para la persistencia
 
-    protected CafeteriaService cafeteriaService;
+    protected static IFactoryDAO factoryDAO = PersistenceConfiguration.SelectPersistenceType();
 
     // Constructores
     /**
@@ -41,8 +43,9 @@ public class Cafeteria {
         else
             throw new RuntimeException("Error, el email del usuario no cumple el formato *@*.com");
         currentOpenedOrders = new HashMap<String, List<OrderWithUserAndDate>>();
-        cafeteriaService = new CafeteriaService(kitchenEmail);
-        orderArchive = cafeteriaService.GetOrders();
+
+        ICafeteriaDAO cafeteriaDAO = factoryDAO.createCafeteriaDAO(kitchenEmail);
+        orderArchive = cafeteriaDAO.getOrders();
     }
 
     //TODO: Eliminar la dependencia modificando el sistema
@@ -203,7 +206,9 @@ public class Cafeteria {
     public void save()
     {
         bqhSystem.save();
-        cafeteriaService.PostOrders(orderArchive);
+
+        ICafeteriaDAO cafeteriaDAO = factoryDAO.createCafeteriaDAO(kitchenEmail);
+        cafeteriaDAO.postOrders(orderArchive);
     }
 
     /**

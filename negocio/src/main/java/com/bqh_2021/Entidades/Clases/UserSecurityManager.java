@@ -8,16 +8,17 @@ import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 
-import com.bqh_2021.Abstract_Factory_DAO.File_DAO.UserSecurityService;
+import com.bqh_2021.Abstract_Factory_DAO.Interfaces.IFactoryDAO;
+import com.bqh_2021.Abstract_Factory_DAO.Interfaces.IUserSecurityDAO;
+import com.bqh_2021.Utils.PersistenceConfiguration;
+
 
 
 
 
 public class UserSecurityManager {
 
-    // Acceso concurrente???
     private static Map<String, SecretKey> user_key;
-    private static UserSecurityService userSecurityService;
 
     private static final UserSecurityManager SINGLE_INSTANCE = new UserSecurityManager();
 
@@ -25,10 +26,12 @@ public class UserSecurityManager {
         return SINGLE_INSTANCE;
     }
 
+    protected static IFactoryDAO factoryDAO = PersistenceConfiguration.SelectPersistenceType();
+
     public UserSecurityManager()
     {
-        userSecurityService = new UserSecurityService();
-        user_key = userSecurityService.GetUsersKeys();
+        IUserSecurityDAO userSecurityDAO = factoryDAO.createUserSecurityDAO();
+        user_key = userSecurityDAO.getUserSecurityKeys();
     }
 
     public void encryptPasswordAES(User user) throws RuntimeException
@@ -62,6 +65,7 @@ public class UserSecurityManager {
     }
 
     public void closeUserSecurityManger(){
-        userSecurityService.PostUsersKeys(user_key);
+        IUserSecurityDAO userSecurityDAO = factoryDAO.createUserSecurityDAO();
+        userSecurityDAO.postUserSecurityKey(user_key);
     }
 }

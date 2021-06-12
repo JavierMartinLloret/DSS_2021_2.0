@@ -6,10 +6,12 @@ import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 
-import com.bqh_2021.Abstract_Factory_DAO.File_DAO.FileOrderDAO;
-import com.bqh_2021.Abstract_Factory_DAO.File_DAO.ProdCategoryService;
-import com.bqh_2021.Abstract_Factory_DAO.File_DAO.ProductService;
+import com.bqh_2021.Abstract_Factory_DAO.Interfaces.IFactoryDAO;
+import com.bqh_2021.Abstract_Factory_DAO.Interfaces.IOrderDAO;
+import com.bqh_2021.Abstract_Factory_DAO.Interfaces.IProdCategoryDAO;
+import com.bqh_2021.Abstract_Factory_DAO.Interfaces.IProductDAO;
 import com.bqh_2021.Entidades.Interfaces.IProduct;
+import com.bqh_2021.Utils.PersistenceConfiguration;
 
 
 /**
@@ -26,9 +28,8 @@ public class BQH {
     protected HashMap<Integer, Order> currentOpenedOrders; // Ordenes que se han realizado en el día.
     protected Set<Order> closedOrders;
     protected BigDecimal dailyBox;
-    protected ProductService productService;
-    protected ProdCategoryService categoryService;
-    protected FileOrderDAO orderService;
+
+    protected static IFactoryDAO factoryDAO = PersistenceConfiguration.SelectPersistenceType();
 
     private int idOrderCounter = 0; // Este parámetro debería ser un autoincrementado de la BDD
 
@@ -40,15 +41,16 @@ public class BQH {
      */
     public BQH(String kitchenEmail)
     {
-        productService = new ProductService(kitchenEmail);
-        categoryService = new ProdCategoryService();
-        orderService = new FileOrderDAO(kitchenEmail);
+        IProductDAO productDAO = factoryDAO.createProductDAO(kitchenEmail);
+        IProdCategoryDAO prodCategoryDAO = factoryDAO.createProdCategoryDAO();
+        IOrderDAO orderDAO = factoryDAO.createOrderDAO(kitchenEmail);
+
         this.kitchenEmail = kitchenEmail;
         currentOpenedOrders = new HashMap<Integer, Order>();
         dailyBox = BigDecimal.ZERO;
-        products = productService.GetProducts();
-        productCategories = categoryService.GetCategories();
-        closedOrders = orderService.GetOrders();    
+        products = productDAO.getProducts();
+        productCategories = prodCategoryDAO.getCategories();
+        closedOrders = orderDAO.getOrders();    
         for(Order o: closedOrders){
             if(o.getId() > idOrderCounter){
                 idOrderCounter = o.getId();
@@ -259,7 +261,10 @@ public class BQH {
     }
 
     public void save(){
-        orderService.PostOrders(closedOrders);
-        productService.PostProducts(products);
+        // IOrderDAO orderDAO = factoryDAO.createOrderDAO(id) TODO: JUANCA
+        IProductDAO productDAO = factoryDAO.createProductDAO(kitchenEmail);
+        productDAO.postProducts(products);
+
+        //orderService.PostOrders(closedOrders);
     }
 }

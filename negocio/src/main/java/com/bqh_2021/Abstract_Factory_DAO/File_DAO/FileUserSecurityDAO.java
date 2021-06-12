@@ -1,4 +1,4 @@
-package com.bqh_2021.Repositorios;
+package com.bqh_2021.Abstract_Factory_DAO.File_DAO;
 
 import java.io.File;
 import java.io.FileReader;
@@ -10,25 +10,26 @@ import java.util.Map;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
+import com.bqh_2021.Abstract_Factory_DAO.Interfaces.IUserSecurityDAO;
 import com.bqh_2021.Utils.PropertiesReader;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-public class UserSecurityRespositoryFile {
+public class FileUserSecurityDAO implements IUserSecurityDAO{
 
     protected File f = new File(PropertiesReader.getInstance().getProperty("userSecurity.file"));
     
-    private static final UserSecurityRespositoryFile SINGLE_INSTANCE = new UserSecurityRespositoryFile();
+    private static final FileUserSecurityDAO SINGLE_INSTANCE = new FileUserSecurityDAO();
     
-    public UserSecurityRespositoryFile(){}
+    public FileUserSecurityDAO(){}
 
-    public static UserSecurityRespositoryFile getInstance(){
+    public static FileUserSecurityDAO getInstance(){
         return SINGLE_INSTANCE;
     }
 
-    public void PostUserSecurityKey(Map<String, SecretKey> user_key){       
+    public void postUserSecurityKey(Map<String, SecretKey> user_key){       
         JSONArray array = new JSONArray();
         try (FileWriter writer = new FileWriter(f)){
             for (String u: user_key.keySet()){
@@ -43,7 +44,7 @@ public class UserSecurityRespositoryFile {
         }catch(Exception e){}
     }
 
-    public Map<String, SecretKey> GetUserSecurityKeys(){       
+    public Map<String, SecretKey> getUserSecurityKeys(){       
         Map<String, SecretKey> map = new HashMap<String, SecretKey>();
         JSONParser jsonParser = new JSONParser();
         try (FileReader reader = new FileReader(f)){
