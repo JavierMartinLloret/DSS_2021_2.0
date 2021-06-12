@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 
+import com.bqh_2021.Abstract_Factory_DAO.File_DAO.FileOrderDAO;
+import com.bqh_2021.Abstract_Factory_DAO.File_DAO.ProdCategoryService;
+import com.bqh_2021.Abstract_Factory_DAO.File_DAO.ProductService;
 import com.bqh_2021.Entidades.Interfaces.IProduct;
-import com.bqh_2021.File_DAO.OrderService;
-import com.bqh_2021.File_DAO.ProdCategoryService;
-import com.bqh_2021.File_DAO.ProductService;
 
 
 /**
@@ -28,7 +28,7 @@ public class BQH {
     protected BigDecimal dailyBox;
     protected ProductService productService;
     protected ProdCategoryService categoryService;
-    protected OrderService orderService;
+    protected FileOrderDAO orderService;
 
     private int idOrderCounter = 0; // Este parámetro debería ser un autoincrementado de la BDD
 
@@ -42,7 +42,7 @@ public class BQH {
     {
         productService = new ProductService(kitchenEmail);
         categoryService = new ProdCategoryService();
-        orderService = new OrderService(kitchenEmail);
+        orderService = new FileOrderDAO(kitchenEmail);
         this.kitchenEmail = kitchenEmail;
         currentOpenedOrders = new HashMap<Integer, Order>();
         dailyBox = BigDecimal.ZERO;

@@ -1,4 +1,4 @@
-package com.bqh_2021.Repositorios;
+package com.bqh_2021.Abstract_Factory_DAO.File_DAO;
 
 import java.io.File;
 import java.io.FileReader;
@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.bqh_2021.Abstract_Factory_DAO.Interfaces.IOrderDAO;
 import com.bqh_2021.Entidades.Clases.Order;
 import com.bqh_2021.Entidades.Clases.Product;
 import com.bqh_2021.Entidades.Interfaces.IProduct;
@@ -17,16 +18,19 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-public class OrderRespositoryFile{
+
+
+public class FileOrderDAO implements IOrderDAO{
 
     protected File f;
     protected static String order = PropertiesReader.getInstance().getProperty("order.file");
     
-    public OrderRespositoryFile(String id){
+    public FileOrderDAO(String id){
         f = new File(order + id + ".json");
     }
-    
-    public Set<Order> GetOrders(){       
+
+    @Override
+    public Set<Order> GetOrders() {
         Set<Order> set = new HashSet<Order>();
         JSONParser jsonParser = new JSONParser();
         try (FileReader reader = new FileReader(f)){
@@ -55,7 +59,8 @@ public class OrderRespositoryFile{
         return set;
     }
 
-    public void PostOrders(Set<Order> set){
+    @Override
+    public void PostOrders(Set<Order> set) {
         JSONArray array = new JSONArray();
         try (FileWriter writer = new FileWriter(f)){
             for (Order o: set){
@@ -71,4 +76,5 @@ public class OrderRespositoryFile{
         }catch(Exception e){}
     }
 
+    
 }
