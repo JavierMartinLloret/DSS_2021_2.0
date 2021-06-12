@@ -20,24 +20,24 @@ public class UserController {
 
     @GetMapping("/users")
     public Set<User> GetUsers(){
-        return service.GetUsers();
+        return service.getUsers();
     }
 
     @PostMapping("/users")
     public String PostUsers(@RequestBody UserRequest user){
-        Set<User> s = service.GetUsers();
+        Set<User> s = service.getUsers();
         try {
             s.add(new User(user.getNickname(), user.getEmail(), user.getPassword(), user.getIsAdult(), true));
         } catch (RuntimeException rE) {
             return "{\"status\": \"fail\",\"error\": \"" + rE + "\"}";
         }
-        service.PostUsers(s);
+        service.postUsers(s);
         return "{\"status\": \"succes\"}"; 
     }
 
     @PutMapping("/users")
     public String PutUser(@RequestBody UserRequest user){
-        Set<User> s = service.GetUsers();
+        Set<User> s = service.getUsers();
         for(User u: s){
             if(u.getEmail().equals(user.getEmail())){
                 try {
@@ -50,7 +50,7 @@ public class UserController {
                 break;
             }
         }
-        service.PostUsers(s);
+        service.postUsers(s);
         return "{\"status\": \"succes\"}";
     }
 }

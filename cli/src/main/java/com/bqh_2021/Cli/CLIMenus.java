@@ -63,7 +63,7 @@ public class CLIMenus {
 
         }
 
-        BqhSystem.closeBQH();
+        BqhSystem.save();
     }
 
     public void orderMenu(int orderID) {
