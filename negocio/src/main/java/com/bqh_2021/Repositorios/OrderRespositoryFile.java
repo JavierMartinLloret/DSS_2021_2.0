@@ -11,6 +11,7 @@ import java.util.Set;
 import com.bqh_2021.Entidades.Clases.Order;
 import com.bqh_2021.Entidades.Clases.Product;
 import com.bqh_2021.Entidades.Interfaces.IProduct;
+import com.bqh_2021.Utils.PropertiesReader;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -19,7 +20,7 @@ import org.json.simple.parser.JSONParser;
 public class OrderRespositoryFile{
 
     protected File f;
-    protected static String order = "data/order-";
+    protected static String order = PropertiesReader.getInstance().getProperty("order.file");
     
     public OrderRespositoryFile(String id){
         f = new File(order + id + ".json");

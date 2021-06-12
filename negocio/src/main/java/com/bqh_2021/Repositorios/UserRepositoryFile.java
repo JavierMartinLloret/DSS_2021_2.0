@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.bqh_2021.Entidades.Clases.User;
+import com.bqh_2021.Utils.PropertiesReader;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -14,7 +15,7 @@ import org.json.simple.parser.JSONParser;
 
 public class UserRepositoryFile {
     
-    protected File f = new File("data/user.json");
+    protected File f = new File(PropertiesReader.getInstance().getProperty("user.file"));
     protected static int idCounter = 0;
 
     private static final UserRepositoryFile SINGLE_INSTANCE = new UserRepositoryFile();

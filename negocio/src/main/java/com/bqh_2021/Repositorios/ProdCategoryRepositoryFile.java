@@ -6,13 +6,15 @@ import java.io.FileReader;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import com.bqh_2021.Utils.PropertiesReader;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 public class ProdCategoryRepositoryFile{
 
-    protected File f = new File("data/prodCategory.json");
+    protected File f = new File(PropertiesReader.getInstance().getProperty("prodCategory.file"));
     
     private static final ProdCategoryRepositoryFile SINGLE_INSTANCE = new ProdCategoryRepositoryFile();
     

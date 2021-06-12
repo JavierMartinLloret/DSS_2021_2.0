@@ -10,13 +10,15 @@ import java.util.Map;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
+import com.bqh_2021.Utils.PropertiesReader;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 public class UserSecurityRespositoryFile {
 
-    protected File f = new File("data/userSecurity.json");
+    protected File f = new File(PropertiesReader.getInstance().getProperty("userSecurity.file"));
     
     private static final UserSecurityRespositoryFile SINGLE_INSTANCE = new UserSecurityRespositoryFile();
     

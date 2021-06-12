@@ -14,6 +14,7 @@ import java.util.Map;
 import com.bqh_2021.Entidades.Clases.Cafeteria;
 import com.bqh_2021.Entidades.Clases.OrderWithUserAndDate;
 import com.bqh_2021.Entidades.Clases.User;
+import com.bqh_2021.Utils.PropertiesReader;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -22,7 +23,8 @@ import org.json.simple.parser.JSONParser;
 public class CafeteriaRepositoryFile {
     
     protected File f;
-    protected static String cafeteria = "data/cafeteria-";
+
+    protected static String cafeteria = PropertiesReader.getInstance().getProperty("cafeteria.file");
     
     public CafeteriaRepositoryFile(String id){
         f = new File(cafeteria + id + ".json");

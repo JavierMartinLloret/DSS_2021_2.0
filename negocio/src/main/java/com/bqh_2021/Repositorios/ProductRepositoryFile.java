@@ -11,6 +11,7 @@ import java.util.List;
 import com.bqh_2021.Entidades.Clases.Menu;
 import com.bqh_2021.Entidades.Clases.Product;
 import com.bqh_2021.Entidades.Interfaces.IProduct;
+import com.bqh_2021.Utils.PropertiesReader;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -19,7 +20,7 @@ import org.json.simple.parser.JSONParser;
 public class ProductRepositoryFile{
 
     protected static File f;
-    protected static String product = "data/product-";
+    protected static String product = PropertiesReader.getInstance().getProperty("product.file");
     
     
     public ProductRepositoryFile(String kitchenEmail){

@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.bqh_2021.Entidades.Clases.Cafeteria;
-
+import com.bqh_2021.Utils.PropertiesReader;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -14,7 +14,7 @@ import org.json.simple.parser.JSONParser;
 
 public class CafeteriaIDRepositoryFile {
     
-    protected File f = new File("data/cafeterias.json");
+    protected File f = new File(PropertiesReader.getInstance().getProperty("cafeteriaID.file"));
 
     private static final CafeteriaIDRepositoryFile SINGLE_INSTANCE = new CafeteriaIDRepositoryFile();
     
