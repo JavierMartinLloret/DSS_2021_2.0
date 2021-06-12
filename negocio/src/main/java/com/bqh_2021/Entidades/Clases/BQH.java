@@ -204,6 +204,7 @@ public class BQH {
             //Eliminamos la posibilidad de modificar la orden.
             closedOrders.add(currentOrder);
             currentOpenedOrders.remove(id);
+            save();
         }
         else
         {
@@ -257,7 +258,7 @@ public class BQH {
         return productCategories;
     }
 
-    public void closeBQH(){
+    public void save(){
         orderService.PostOrders(closedOrders);
         productService.PostProducts(products);
     }
