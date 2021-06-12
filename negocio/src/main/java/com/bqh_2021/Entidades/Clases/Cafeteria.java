@@ -146,7 +146,7 @@ public class Cafeteria {
                 orderArchive.put(client.getEmail(), new ArrayList<OrderWithUserAndDate>());
             
             orderArchive.get(client.getEmail()).add(orderToArchieve);
-            closeCafeteria();
+            save();
         }
         else
             throw new RuntimeException("Error al cerrar la orden");
@@ -200,9 +200,9 @@ public class Cafeteria {
         this.orderArchive = orderArchive;
     }
 
-    public void closeCafeteria()
+    public void save()
     {
-        bqhSystem.closeBQH();
+        bqhSystem.save();
         cafeteriaService.PostOrders(orderArchive);
     }
 
