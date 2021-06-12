@@ -1,5 +1,5 @@
 package com.bqh_2021.Abstract_Factory_DAO.Interfaces;
 
-public interface IUserFactoryDAO {
+public interface IFactoryDAO {
     public IUserDAO createUserDAO();
 }

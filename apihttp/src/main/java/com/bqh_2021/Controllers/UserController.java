@@ -3,7 +3,7 @@ package com.bqh_2021.Controllers;
 import java.util.Set;
 
 import com.bqh_2021.Entidades.Clases.User;
-import com.bqh_2021.File_DAO.UserService;
+import com.bqh_2021.File_DAO.FileUserDAO;
 import com.bqh_2021.Requests.UserRequest;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +16,7 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 @RestController
 public class UserController {
     
-    private static final UserService service = new UserService();
+    private static final FileUserDAO service = new FileUserDAO();
 
     @GetMapping("/users")
     public Set<User> GetUsers(){

@@ -1,6 +1,8 @@
 package com.bqh_2021.Entidades.Clases;
 
-import com.bqh_2021.File_DAO.UserService;
+import com.bqh_2021.Abstract_Factory_DAO.Interfaces.IFactoryDAO;
+import com.bqh_2021.Abstract_Factory_DAO.Interfaces.IUserDAO;
+import com.bqh_2021.Utils.PersistenceConfiguration;
 
 /**
  * User
@@ -16,8 +18,7 @@ public class User {
     protected String password;
     protected UserSecurityManager secManager;
 
-    //TODO: REVISAR
-    protected UserService servicioUsuario;
+    protected static IFactoryDAO factoryDAO = PersistenceConfiguration.SelectPersistenceType();
 
     // Constructores
 
@@ -39,8 +40,8 @@ public class User {
 
     public User(String nickname, String email, String password, boolean isAdult, boolean isNew) throws RuntimeException
     {
-        this.servicioUsuario = new UserService();
-        this.userID = servicioUsuario.getCurrentID();
+        IUserDAO userDAO = factoryDAO.createUserDAO();
+        this.userID = userDAO.getNextUserID();
         this.nickname = nickname;
         this.isAdult = isAdult;
         if(EmailValidator.emailFormatIsValid(email))
