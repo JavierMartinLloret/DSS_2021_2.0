@@ -1,6 +1,7 @@
 package com.bqh_2021.Entidades.Clases;
 
 import java.math.BigDecimal;
+import java.util.Set;
 
 /**
  * CreditCard
@@ -12,6 +13,8 @@ import java.math.BigDecimal;
 public class CreditCard {
     protected User owner;
     protected BigDecimal balance;
+
+    protected Set<Payment> paymentsArchive;
 
     // Constructores
 
@@ -38,6 +41,17 @@ public class CreditCard {
             throw new RuntimeException("Error, el cargo a la tarjeta de "+owner.nickname+"supera el saldo de la misma");
         
         balance = balance.subtract(quantity);
+    }
+
+    public Set<Payment> getPaymentsArchive()
+    {
+        return paymentsArchive;
+    }
+
+    public void addPaymentToArchive(Payment payment) throws RuntimeException
+    {
+        if(paymentsArchive.add(payment) == false)
+            throw new RuntimeException("Error al añadir el nuevo ticket de pago a la tarjeta del cliente "+owner.getNickname());
     }
 
 }

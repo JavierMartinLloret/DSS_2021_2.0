@@ -14,10 +14,12 @@ public class Payment {
     protected String concept;
     protected User payer;
     protected Date dateOfSell;
-    protected BigDecimal price;
+    protected BigDecimal cost;
     
     protected String codeForPayment;
-    protected boolean isAutorized; // Patrón observer
+
     //protected String payee;??
 
+    //protected PaymentObserver observer;
+    //public boolean isAutorized(){...}
 }
