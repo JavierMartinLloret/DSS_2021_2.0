@@ -3,6 +3,9 @@ package com.bqh_2021.Entidades.Clases;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.bqh_2021.Entidades.Interfaces.IObservable;
+import com.bqh_2021.Entidades.Interfaces.IObserver;
+
 /**
  * Payment
  * @author Javier Martín-Lloret
@@ -10,16 +13,39 @@ import java.util.Date;
  * @since 4.0
  * 
  */
-public class Payment {
+public class Payment{
     protected String concept;
-    protected User payer;
+    protected String payerEmail;
     protected Date dateOfSell;
     protected BigDecimal cost;
     
     protected String codeForPayment;
 
+    protected boolean paied;
+
+    public Payment(String concept, String payerEmail, Date dateOfSell, BigDecimal cost, String codeForPayment){
+        this.concept = concept;
+        this.payerEmail = payerEmail;
+        this.dateOfSell = dateOfSell;
+        this.cost = cost;
+        this.codeForPayment = codeForPayment;
+        this.paied = false;
+    }
+
     //protected String payee;??
 
     //protected PaymentObserver observer;
     //public boolean isAutorized(){...}
+
+    public String getCode(){
+        return codeForPayment;
+    }
+
+    public boolean getPaied(){
+        return paied;
+    }
+
+    public void close(){
+        paied = true;
+    }
 }

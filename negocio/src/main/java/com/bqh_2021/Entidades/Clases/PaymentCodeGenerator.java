@@ -6,6 +6,7 @@ public class PaymentCodeGenerator {
     private static final int size = 5;
     private static final Random ranGen = new Random((long)Math.random());
     private static final String characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+   
     public static String generateCode()
     {
         String validationCode = new String();
