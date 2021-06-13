@@ -49,7 +49,7 @@ public class BQH {
         IProductDAO productDAO = factoryDAO.createProductDAO(kitchenEmail);
         IProdCategoryDAO prodCategoryDAO = factoryDAO.createProdCategoryDAO();
         IOrderDAO orderDAO = factoryDAO.createOrderDAO(kitchenEmail);
-        IDayBoxDAO dayBoxDAO = factoryDAO.createDayBoxDAO();
+        IDayBoxDAO dayBoxDAO = factoryDAO.createDayBoxDAO(kitchenEmail);
 
         this.kitchenEmail = kitchenEmail;
         currentOpenedOrders = new HashMap<Integer, Order>();
@@ -277,7 +277,7 @@ public class BQH {
     public void save(){
         IOrderDAO orderDAO = factoryDAO.createOrderDAO(kitchenEmail);
         IProductDAO productDAO = factoryDAO.createProductDAO(kitchenEmail);
-        IDayBoxDAO dayBoxDAO = factoryDAO.createDayBoxDAO();
+        IDayBoxDAO dayBoxDAO = factoryDAO.createDayBoxDAO(kitchenEmail);
 
         orderDAO.postOrders(closedOrders);
         productDAO.postProducts(products);

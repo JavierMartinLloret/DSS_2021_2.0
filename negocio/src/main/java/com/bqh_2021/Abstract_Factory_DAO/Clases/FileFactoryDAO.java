@@ -56,8 +56,8 @@ public class FileFactoryDAO implements IFactoryDAO{
     }
 
     @Override
-    public IDayBoxDAO createDayBoxDAO(){
-        return new FileDayBoxDAO();
+    public IDayBoxDAO createDayBoxDAO(String kitchenEmail){
+        return new FileDayBoxDAO(kitchenEmail);
     }
     
 }

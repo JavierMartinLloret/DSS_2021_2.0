@@ -18,7 +18,6 @@ public class ApiApplication {
 	
 	public static Set<Cafeteria> cafeterias = new HashSet<Cafeteria>();
 
-
 	public static void main(String[] args) {
 		IFactoryDAO factoryDAO = PersistenceConfiguration.SelectPersistenceType();
 		ICafeteriaIdDAO cafeteriaDAO = factoryDAO.createCafeteriaIdDAO();

@@ -16,7 +16,13 @@ import org.json.simple.parser.JSONParser;
 
 public class FileDayBoxDAO implements IDayBoxDAO {
 
-    protected File f = new File(PropertiesReader.getInstance().getProperty("dayBox.file"));
+    protected static File f;
+    protected static String product = PropertiesReader.getInstance().getProperty("dayBox.file");
+    
+    
+    public FileDayBoxDAO(String kitchenEmail){
+        f = new File(product + kitchenEmail + ".json");
+    }
 
     @Override
     public Map<String, BigDecimal> getDayBox() {
