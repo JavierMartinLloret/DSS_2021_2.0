@@ -32,7 +32,7 @@ public class BQH {
     protected HashMap<Integer, Order> currentOpenedOrders; // Ordenes que se han realizado en el día.
     protected Set<Order> closedOrders;
     protected Map<String, BigDecimal> dailyBox;
-    protected SimpleDateFormat simpleDateFormat = new SimpleDateFormat("DD/MMMM/YYYY");
+    protected SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/YYYY");
 
     protected static IFactoryDAO factoryDAO = PersistenceConfiguration.SelectPersistenceType();
 
@@ -277,8 +277,10 @@ public class BQH {
     public void save(){
         IOrderDAO orderDAO = factoryDAO.createOrderDAO(kitchenEmail);
         IProductDAO productDAO = factoryDAO.createProductDAO(kitchenEmail);
+        IDayBoxDAO dayBoxDAO = factoryDAO.createDayBoxDAO();
 
         orderDAO.postOrders(closedOrders);
         productDAO.postProducts(products);
+        dayBoxDAO.postDayBox(dailyBox);
     }
 }

@@ -34,7 +34,7 @@ public class FileDayBoxDAO implements IDayBoxDAO {
     }
 
     @Override
-    public void setDayBox(Map<String, BigDecimal> map) {
+    public void postDayBox(Map<String, BigDecimal> map) {
         JSONArray array = new JSONArray();
         try (FileWriter writer = new FileWriter(f)){
             for (String u: map.keySet()){

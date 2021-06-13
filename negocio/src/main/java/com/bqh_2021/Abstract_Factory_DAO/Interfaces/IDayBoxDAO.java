@@ -5,5 +5,5 @@ import java.util.Map;
 
 public interface IDayBoxDAO {
     public Map<String, BigDecimal> getDayBox();
-    public void setDayBox(Map<String, BigDecimal> map);
+    public void postDayBox(Map<String, BigDecimal> map);
 }
