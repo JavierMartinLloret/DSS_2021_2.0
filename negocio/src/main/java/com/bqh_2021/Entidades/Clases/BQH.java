@@ -1,11 +1,15 @@
 package com.bqh_2021.Entidades.Clases;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 
+import com.bqh_2021.Abstract_Factory_DAO.Interfaces.IDayBoxDAO;
 import com.bqh_2021.Abstract_Factory_DAO.Interfaces.IFactoryDAO;
 import com.bqh_2021.Abstract_Factory_DAO.Interfaces.IOrderDAO;
 import com.bqh_2021.Abstract_Factory_DAO.Interfaces.IProdCategoryDAO;
@@ -27,7 +31,8 @@ public class BQH {
     protected SortedSet<String> productCategories;
     protected HashMap<Integer, Order> currentOpenedOrders; // Ordenes que se han realizado en el día.
     protected Set<Order> closedOrders;
-    protected BigDecimal dailyBox;
+    protected Map<String, BigDecimal> dailyBox;
+    protected SimpleDateFormat simpleDateFormat = new SimpleDateFormat("DD/MMMM/YYYY");
 
     protected static IFactoryDAO factoryDAO = PersistenceConfiguration.SelectPersistenceType();
 
@@ -44,10 +49,11 @@ public class BQH {
         IProductDAO productDAO = factoryDAO.createProductDAO(kitchenEmail);
         IProdCategoryDAO prodCategoryDAO = factoryDAO.createProdCategoryDAO();
         IOrderDAO orderDAO = factoryDAO.createOrderDAO(kitchenEmail);
+        IDayBoxDAO dayBoxDAO = factoryDAO.createDayBoxDAO();
 
         this.kitchenEmail = kitchenEmail;
         currentOpenedOrders = new HashMap<Integer, Order>();
-        dailyBox = BigDecimal.ZERO;
+        dailyBox = dayBoxDAO.getDayBox();
         products = productDAO.getProducts();
         productCategories = prodCategoryDAO.getCategories();
         closedOrders = orderDAO.getOrders();    
@@ -202,7 +208,12 @@ public class BQH {
         if(currentOrder != null)
         {
             //Obtenemos el precio de la comanda y lo registramos en la caja diaria
-            dailyBox = dailyBox.add(currentOrder.getPrice());
+            if(dailyBox.containsKey(simpleDateFormat.format(new Date()))){
+                dailyBox.get(simpleDateFormat.format(new Date())).add(currentOrder.getPrice());
+            }
+            else{
+                dailyBox.put(simpleDateFormat.format(new Date()), currentOrder.getPrice());
+            }
             //Eliminamos la posibilidad de modificar la orden.
             closedOrders.add(currentOrder);
             currentOpenedOrders.remove(id);
@@ -227,7 +238,10 @@ public class BQH {
      */
     public BigDecimal getDayIncome()
     {
-        return dailyBox;
+        if(dailyBox.containsKey(simpleDateFormat.format(new Date()))){
+            return dailyBox.get(simpleDateFormat.format(new Date()));
+        }
+        return new BigDecimal("0");
     }
 
     public int getLenOrders(){

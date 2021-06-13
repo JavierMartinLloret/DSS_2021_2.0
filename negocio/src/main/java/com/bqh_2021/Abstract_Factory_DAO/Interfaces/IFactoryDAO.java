@@ -8,5 +8,5 @@ public interface IFactoryDAO {
     public IProductDAO createProductDAO(String kitchenEmail);
     public IUserDAO createUserDAO();
     public IUserSecurityDAO createUserSecurityDAO();
-    
+    public IDayBoxDAO createDayBoxDAO();
 }
