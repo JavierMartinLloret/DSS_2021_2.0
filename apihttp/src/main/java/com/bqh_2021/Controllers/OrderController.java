@@ -122,6 +122,7 @@ public class OrderController {
                     User user = new User(j.get("user").toString());
                     int orderID = Integer.parseInt(j.get("orderID").toString());
                     OrderWithUserAndDate owad = c.getOWUADFromId(user, orderID);
+                    // Email para test, se tiene que cambiar por c.getKitchenEmail() y se enviara el correo a la cafeteria pertinente
                     sendEmailService.sendEmail("javier.martinlloret@alum.uca.es", c.getOpenedOrderFormID(user, orderID).getItems().toString(), owad.getDate().toString() + " " + owad.getClient().getEmail());
                     c.endOrder(user, orderID);
                 } catch (RuntimeException rE) {

@@ -208,11 +208,11 @@ public class BQH {
         if(currentOrder != null)
         {
             //Obtenemos el precio de la comanda y lo registramos en la caja diaria
-            if(dailyBox.containsKey(simpleDateFormat.format(new Date()))){
-                dailyBox.get(simpleDateFormat.format(new Date())).add(currentOrder.getPrice());
+            if(dailyBox.containsKey(simpleDateFormat.format(new Date()).toString())){
+                dailyBox.put(simpleDateFormat.format(new Date()).toString(), dailyBox.get(simpleDateFormat.format(new Date()).toString()).add(currentOrder.getPrice()));
             }
             else{
-                dailyBox.put(simpleDateFormat.format(new Date()), currentOrder.getPrice());
+                dailyBox.put(simpleDateFormat.format(new Date()).toString(), currentOrder.getPrice());
             }
             //Eliminamos la posibilidad de modificar la orden.
             closedOrders.add(currentOrder);
