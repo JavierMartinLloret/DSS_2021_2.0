@@ -261,10 +261,10 @@ public class BQH {
     }
 
     public void save(){
-        // IOrderDAO orderDAO = factoryDAO.createOrderDAO(id) TODO: JUANCA
+        IOrderDAO orderDAO = factoryDAO.createOrderDAO(kitchenEmail);
         IProductDAO productDAO = factoryDAO.createProductDAO(kitchenEmail);
-        productDAO.postProducts(products);
 
-        //orderService.PostOrders(closedOrders);
+        orderDAO.postOrders(closedOrders);
+        productDAO.postProducts(products);
     }
 }
