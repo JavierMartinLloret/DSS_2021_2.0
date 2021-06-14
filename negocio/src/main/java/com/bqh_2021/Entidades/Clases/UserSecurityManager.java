@@ -26,7 +26,7 @@ public class UserSecurityManager {
         return SINGLE_INSTANCE;
     }
 
-    protected static IFactoryDAO factoryDAO = PersistenceConfiguration.SelectPersistenceType();
+    protected static IFactoryDAO factoryDAO = PersistenceConfiguration.LoadPersistenceType();
 
     public UserSecurityManager()
     {
