@@ -1,5 +1,6 @@
-package com.bqh_2021.Entidades.Clases;
+package com.bqh_2021.clases;
 
+import com.bqh_2021.accessingdatamysql.Payment;
 
 public class PaymentObserver{
 

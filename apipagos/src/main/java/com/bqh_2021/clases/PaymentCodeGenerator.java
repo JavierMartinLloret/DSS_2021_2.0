@@ -1,14 +1,15 @@
-package com.bqh_2021.Entidades.Clases;
+package com.bqh_2021.clases;
 
 import java.util.Random;
 
 public class PaymentCodeGenerator {
     private static final int size = 5;
-    private static final Random ranGen = new Random((long)Math.random());
+    private static Random ranGen;
     private static final String characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
    
     public static String generateCode()
     {
+        ranGen = new Random();
         String validationCode = new String();
         for (int i = 0; i < size; i++) {
             if(ranGen.nextInt(2)%2 == 0) //50%

@@ -6,13 +6,15 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Random;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
-import com.bqh_2021.Entidades.Clases.Payment;
-import com.bqh_2021.Entidades.Clases.PaymentCodeGenerator;
-import com.bqh_2021.Entidades.Clases.PaymentObserver;
 import com.bqh_2021.Servicios.SendEmailService;
+import com.bqh_2021.accessingdatamysql.CreditCard;
+import com.bqh_2021.accessingdatamysql.CreditCardRepository;
+import com.bqh_2021.accessingdatamysql.Payment;
+import com.bqh_2021.clases.PaymentCodeGenerator;
+import com.bqh_2021.clases.PaymentObserver;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -20,12 +22,16 @@ import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class PagosController {
+public class PaymentController {
+
+    @Autowired
+    private CreditCardRepository creditCardRepository;
 
     public static Map<String, PaymentObserver> codes = new HashMap<String, PaymentObserver>();
 
@@ -35,7 +41,7 @@ public class PagosController {
     @Value("${spring.mail.ipConfirm}")
     private String ip;
     
-    @GetMapping("/pagos")
+    @PostMapping("/pagos")
     public String pay(@RequestBody String payload) throws ParseException, java.text.ParseException{
         JSONParser jsonParser = new JSONParser();
         Object obj = jsonParser.parse(payload);
@@ -49,8 +55,8 @@ public class PagosController {
                                 code);
         PaymentObserver observer = new PaymentObserver(payment);
         codes.put(code,observer);
-        sendEmailService.sendEmail("javier.martinlloret@alum.uca.es", ip + payment.getCode(), "Confirmacion de pago en " + j.get("concept").toString());
-        while(!payment.getPaied()){
+        sendEmailService.sendEmail("javier.martinlloret@alum.uca.es", ip + payment.getCodeForPayment(), "Confirmacion de pago en " + j.get("concept").toString());
+        while(!payment.isPaied()){
             try {
                 TimeUnit.SECONDS.sleep(2);
             } catch (InterruptedException e) {
@@ -58,7 +64,18 @@ public class PagosController {
                 e.printStackTrace();
             }    
         }
-        return "{\"status\": \"success\"}"; 
+        Optional<CreditCard> creditCard = creditCardRepository.findById(j.get("payerEmail").toString());
+        if(creditCard.isPresent()){
+            creditCard.get().addPaymentToArchive(payment);
+            try{
+                creditCard.get().charge(payment.getCost());
+                creditCardRepository.save(creditCard.get());
+                return "{\"status\": \"success\"}"; 
+            }catch(RuntimeException e){
+                return "{\"status\": \"fail\", \"error\": \"" + e.getMessage() + "\"}";
+            }
+        }
+        return "{\"status\": \"fail\"}"; 
     }
 
     @GetMapping("/pagosConfirm")
