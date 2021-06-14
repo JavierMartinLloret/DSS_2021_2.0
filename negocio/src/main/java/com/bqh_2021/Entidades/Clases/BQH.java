@@ -34,7 +34,7 @@ public class BQH {
     protected Map<String, BigDecimal> dailyBox;
     protected SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/YYYY");
 
-    protected static IFactoryDAO factoryDAO = PersistenceConfiguration.SelectPersistenceType();
+    protected static IFactoryDAO factoryDAO = PersistenceConfiguration.LoadPersistenceType();
 
     private int idOrderCounter = 0; // Este parámetro debería ser un autoincrementado de la BDD
 

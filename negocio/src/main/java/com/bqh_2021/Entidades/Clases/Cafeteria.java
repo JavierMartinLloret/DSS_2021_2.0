@@ -21,7 +21,7 @@ public class Cafeteria {
     protected Map<String, List<OrderWithUserAndDate>> currentOpenedOrders; // Histórico de pedidos para la persistencia
     protected Map<String, List<OrderWithUserAndDate>> orderArchive; // Histórico de pedidos para la persistencia
 
-    protected static IFactoryDAO factoryDAO = PersistenceConfiguration.SelectPersistenceType();
+    protected static IFactoryDAO factoryDAO = PersistenceConfiguration.LoadPersistenceType();
 
     // Constructores
     /**

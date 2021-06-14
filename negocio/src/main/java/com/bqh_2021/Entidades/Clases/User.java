@@ -18,7 +18,7 @@ public class User {
     protected String password;
     protected UserSecurityManager secManager;
 
-    protected static IFactoryDAO factoryDAO = PersistenceConfiguration.SelectPersistenceType();
+    protected static IFactoryDAO factoryDAO = PersistenceConfiguration.LoadPersistenceType();
 
     // Constructores
 
