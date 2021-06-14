@@ -3,9 +3,6 @@ package com.bqh_2021.Entidades.Clases;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import com.bqh_2021.Entidades.Interfaces.IObservable;
-import com.bqh_2021.Entidades.Interfaces.IObserver;
-
 /**
  * Payment
  * @author Javier Martín-Lloret
