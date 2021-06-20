@@ -1,7 +1,10 @@
 package com.bqh_2021.Controllers;
 
+import java.math.BigDecimal;
+import java.net.URI;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
@@ -20,6 +23,11 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -28,6 +36,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+
+import springfox.documentation.spring.web.json.Json;
 
 
 
@@ -36,6 +47,9 @@ public class OrderController {
 
     @Autowired
     public SendEmailService sendEmailService;
+
+    @Value("${spring.mail.ipPagos}")
+    String apipagos;
 
     @GetMapping("/cafeteriaOrders")
     public Set<Order> GetOrdersByCafeteria(@RequestParam String cafeteria){
@@ -112,7 +126,42 @@ public class OrderController {
     }
 
     @DeleteMapping("/orders")
-    public String DeleteOrder(@RequestBody String payload) throws ParseException{
+    public String closeOrder(@RequestBody String payload) throws ParseException{
+        JSONParser jsonParser = new JSONParser();
+        Object obj = jsonParser.parse(payload);
+        JSONObject j = (JSONObject)obj;
+        for(Cafeteria c: ApiApplication.cafeterias){
+            if(c.getKitchenEmail().equals(j.get("cafeteria").toString())){
+                try {
+                    RestTemplate restTemplate = new RestTemplate();
+                    BigDecimal balance = restTemplate.getForObject(apipagos + "/creditCardBalance?ownerEmail=" + j.get("user").toString(), BigDecimal.class);
+                    assert(balance.compareTo(new BigDecimal("-11")) == 1);
+                    User user = new User(j.get("user").toString());
+                    int orderID = Integer.parseInt(j.get("orderID").toString());
+                    OrderWithUserAndDate owad = c.getOWUADFromId(user, orderID);
+                    assert((balance.subtract(c.getOpenedOrderFormID(user, owad.getOrderID()).getPrice()).compareTo(new BigDecimal("-11")) == 1));
+                    j.put("payerEmail", user.getEmail());
+                    j.put("concept", "Pedido realizado en " + c.getKitchenEmail());
+                    j.put("date", owad.getDate().toString());
+                    j.put("cost", c.getOpenedOrderFormID(user, owad.getOrderID()).getPrice());
+                    HttpHeaders headers = new HttpHeaders();
+                    headers.setContentType(MediaType.APPLICATION_JSON);
+                    HttpEntity<String> entity = new HttpEntity<String>(j.toString(), headers);
+                    URI location = restTemplate.postForLocation(apipagos + "/pagos", entity, String.class);
+                    assert(location != null);
+                    // Email para test, se tiene que cambiar por c.getKitchenEmail() y se enviara el correo a la cafeteria pertinente
+                    sendEmailService.sendEmail("javier.martinlloret@alum.uca.es", c.getOpenedOrderFormID(user, orderID).getItems().toString(), owad.getDate().toString() + " " + owad.getClient().getEmail());
+                    c.endOrder(user, orderID);
+                } catch (RuntimeException rE) {
+                    return "{\"status\": \"fail\",\"error\": \"" + rE + "\"}";
+                }
+            }
+        }
+        return "{\"status\": \"succes\"}";
+    }
+
+    @DeleteMapping("/cancelOrder")
+    public String cancelOrder(@RequestBody String payload) throws ParseException{
         JSONParser jsonParser = new JSONParser();
         Object obj = jsonParser.parse(payload);
         JSONObject j = (JSONObject)obj;
@@ -120,12 +169,24 @@ public class OrderController {
             if(c.getKitchenEmail().equals(j.get("cafeteria").toString())){
                 try {
                     User user = new User(j.get("user").toString());
-                    int orderID = Integer.parseInt(j.get("orderID").toString());
-                    OrderWithUserAndDate owad = c.getOWUADFromId(user, orderID);
-                    // Email para test, se tiene que cambiar por c.getKitchenEmail() y se enviara el correo a la cafeteria pertinente
-                    sendEmailService.sendEmail("javier.martinlloret@alum.uca.es", c.getOpenedOrderFormID(user, orderID).getItems().toString(), owad.getDate().toString() + " " + owad.getClient().getEmail());
-                    c.endOrder(user, orderID);
-                } catch (RuntimeException rE) {
+                    long diff = c.getOWUADFromId(user, Integer.parseInt(j.get("orderID").toString())).getDate().getTime() - new Date().getTime();
+                    if(diff < 0 || diff / (60 * 1000) % 60 < 30){
+                        return "{\"status\": \"fail\"}";
+                    }
+                    Order o = c.getClosedOrderFromId(user, Integer.parseInt(j.get("orderID").toString()));
+                    JSONObject request = new JSONObject();
+                    request.put("ownerEmail", user.getEmail());
+                    request.put("refund", o.getPrice());
+                    for(IProduct p : o.getItems().keySet()){
+                        o.removeItem(p);
+                    }
+                    RestTemplate restTemplate = new RestTemplate();
+                    HttpHeaders headers = new HttpHeaders();
+                    headers.setContentType(MediaType.APPLICATION_JSON);
+                    HttpEntity<String> entity = new HttpEntity<String>(request.toString(), headers);
+                    URI location = restTemplate.postForLocation(apipagos + "/refundBalance", entity, String.class);
+                    assert(location != null);
+                }catch (RuntimeException rE) {
                     return "{\"status\": \"fail\",\"error\": \"" + rE + "\"}";
                 }
             }

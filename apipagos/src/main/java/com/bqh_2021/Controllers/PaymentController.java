@@ -38,7 +38,7 @@ public class PaymentController {
     @Autowired
     public SendEmailService sendEmailService;
 
-    @Value("${spring.mail.ipConfirm}")
+    @Value("${spring.mail.ipPagosConfirm}")
     private String ip;
     
     @PostMapping("/pagos")
@@ -71,7 +71,7 @@ public class PaymentController {
                 creditCard.get().charge(payment.getCost());
                 creditCardRepository.save(creditCard.get());
                 return "{\"status\": \"success\"}"; 
-            }catch(RuntimeException e){
+            }catch(Exception e){
                 return "{\"status\": \"fail\", \"error\": \"" + e.getMessage() + "\"}";
             }
         }
