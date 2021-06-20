@@ -258,6 +258,26 @@ public class Cafeteria {
         return bqhSystem.getOrderFromId(orderID);
     }
 
+    //TODO: Refactor
+    public Order getClosedOrderFromId(User client, int orderID) throws RuntimeException
+    {
+        if(orderArchive.containsKey(client.getEmail()))
+        {
+            List<OrderWithUserAndDate> personalArchive = orderArchive.get(client.getEmail());
+            OrderWithUserAndDate orderSought = null;
+            for (OrderWithUserAndDate i : personalArchive) {
+                if(i.getOrderID() == orderID)
+                    orderSought = i;
+            }
+            if(orderSought == null)
+                throw new RuntimeException("No se encontró una orden con ID correspondiente a nombre del cliente con email "+client.getEmail());
+            else
+                return bqhSystem.getClosedOrderFromId(orderID);
+        }
+        else
+            throw new RuntimeException("Error, no hay ordenes archivadas a nombre del cliente con email "+client.getEmail());
+    }
+
     /* REFACTORING */
     /**
      * @author Javier Martín-Lloret
