@@ -173,7 +173,9 @@ public class OrderController {
                     if(diff < 0 || diff / (60 * 1000) % 60 < 30){
                         return "{\"status\": \"fail\"}";
                     }
+                    // Order o = c.getClosedOrderFromId(user, Integer.parseInt(j.get("orderID").toString()));
                     Order o = c.getClosedOrderFromId(user, Integer.parseInt(j.get("orderID").toString()));
+                    System.out.println("kalsdjf");
                     JSONObject request = new JSONObject();
                     request.put("ownerEmail", user.getEmail());
                     request.put("refund", o.getPrice());
