@@ -164,6 +164,38 @@ public class Cafeteria {
             throw new RuntimeException("Error al cerrar la orden");
     }
 
+    public void deleteOpenedOrder(User client, int orderID) throws RuntimeException{
+        Order orderToClose = getOpenedOrderFormID(client, orderID); // Comprueba la existencia de la orden en currentOppenedOrders
+        if(orderToClose != null)
+        {
+            bqhSystem.deleteOpenedOrder(orderID);
+
+            /* Pasamos la orden de las abiertas al histórico */
+            // Eliminamos de las abiertas
+            OrderWithUserAndDate orderToDelete = getOWUADFromId(client, orderID);
+            currentOpenedOrders.get(client.getEmail()).remove(orderToDelete);
+            save();
+        }
+        else
+            throw new RuntimeException("Error al cerrar la orden");
+    }
+
+    public void deleteClosedOrder(User client, int orderID) throws RuntimeException{
+        Order orderToClose = getClosedOrderFromId(client, orderID);
+        if(orderToClose != null)
+        {
+            bqhSystem.deleteClosedOrder(orderID);
+
+            /* Pasamos la orden de las abiertas al histórico */
+            // Eliminamos de las abiertas
+            OrderWithUserAndDate orderToDelete = getClosedOWUADFromId(client, orderID);
+            orderArchive.get(client.getEmail()).remove(orderToDelete);
+            save();
+        }
+        else
+            throw new RuntimeException("Error al cerrar la orden");
+    }
+
     public IProduct getProductCafeteria(String itemName) throws RuntimeException
     {
         IProduct productToReturn = null;

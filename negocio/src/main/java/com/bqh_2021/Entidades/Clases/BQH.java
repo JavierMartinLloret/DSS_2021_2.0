@@ -225,6 +225,38 @@ public class BQH {
         }
     }
 
+    public void deleteOpenedOrder(int id) throws RuntimeException{
+        Order currentOrder = currentOpenedOrders.get(id);
+        if(currentOrder != null)
+        {
+            for(IProduct p : currentOrder.getItems().keySet()){
+                currentOrder.removeItem(p);
+            }
+            currentOpenedOrders.remove(id);
+            save();
+        }
+        else
+        {
+            throw new RuntimeException("Error, se intenta eliminar una comanda no registrada en el sistema");
+        }
+    }
+
+    public void deleteClosedOrder(int id) throws RuntimeException{
+        for(Order o : closedOrders){
+            if(o.getId() == id){
+                if(dailyBox.containsKey(simpleDateFormat.format(new Date()).toString())){
+                    dailyBox.put(simpleDateFormat.format(new Date()).toString(), dailyBox.get(simpleDateFormat.format(new Date()).toString()).subtract(o.getPrice()));
+                }
+                closedOrders.remove(o);
+                for(IProduct p : o.getItems().keySet()){
+                    o.removeItem(p);
+                }
+                save();
+                break;
+            }
+        }
+    }
+
     /**
      * getDayIncome
      * 

@@ -134,13 +134,17 @@ public class OrderController {
         for(Cafeteria c: ApiApplication.cafeterias){
             if(c.getKitchenEmail().equals(j.get("cafeteria").toString())){
                 try {
-                    RestTemplate restTemplate = new RestTemplate();
-                    BigDecimal balance = restTemplate.getForObject(apipagos + "/creditCardBalance?ownerEmail=" + j.get("user").toString(), BigDecimal.class);
-                    assert(balance.compareTo(new BigDecimal("-11")) == 1);
                     User user = new User(j.get("user").toString());
                     int orderID = Integer.parseInt(j.get("orderID").toString());
                     OrderWithUserAndDate owad = c.getOWUADFromId(user, orderID);
-                    assert((balance.subtract(c.getOpenedOrderFormID(user, owad.getOrderID()).getPrice()).compareTo(new BigDecimal("-11")) == 1));
+                    RestTemplate restTemplate = new RestTemplate();
+                    BigDecimal balance = restTemplate.getForObject(apipagos + "/creditCardBalance?ownerEmail=" + j.get("user").toString(), BigDecimal.class);
+                    BigDecimal aux = new BigDecimal(balance.toString());
+                    aux = aux.subtract(c.getOpenedOrderFormID(user, owad.getOrderID()).getPrice());
+                    if(aux.compareTo(new BigDecimal("-10.0")) == -1){
+                        c.deleteOpenedOrder(user, orderID);
+                        return "{\"status\": \"fail\",\"error\": \"No hay saldo suficiente\"}";
+                    }
                     j.put("id", orderID);
                     j.put("payerEmail", user.getEmail());
                     j.put("concept", "Pedido realizado en " + c.getKitchenEmail());
@@ -181,9 +185,8 @@ public class OrderController {
                     JSONObject request = new JSONObject();
                     request.put("ownerEmail", user.getEmail());
                     request.put("refund", o.getPrice());
-                    for(IProduct p : o.getItems().keySet()){
-                        o.removeItem(p);
-                    }
+                    request.put("orderID", j.get("orderID").toString());
+                    c.deleteClosedOrder(user, Integer.valueOf(j.get("orderID").toString()));
                     RestTemplate restTemplate = new RestTemplate();
                     HttpHeaders headers = new HttpHeaders();
                     headers.setContentType(MediaType.APPLICATION_JSON);

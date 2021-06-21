@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class DayBoxController {
 
     @GetMapping("/dayBox")
-    public String GetUsers(@RequestParam String cafeteria){
+    public String GetDayBox(@RequestParam String cafeteria){
         FileDayBoxDAO service = new FileDayBoxDAO(cafeteria);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/YYYY");
         return "{\"dayliBox\": \"" + service.getDayBox().get(simpleDateFormat.format(new Date())).toString() + "\"}";

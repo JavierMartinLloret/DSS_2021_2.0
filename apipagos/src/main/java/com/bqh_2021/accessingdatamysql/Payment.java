@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 @Entity
 public class Payment{
@@ -14,7 +15,9 @@ public class Payment{
     protected String payerEmail;
     protected Date dateOfSell;
     protected BigDecimal cost;
+    @Transient
     protected String codeForPayment;
+    @Transient
     protected boolean paied;
 
     public Payment(){}

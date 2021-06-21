@@ -38,6 +38,7 @@ public class CreditCard {
     public void charge(BigDecimal quantity) throws RuntimeException
     {
         BigDecimal aux = new BigDecimal(balance.toString());
+        aux = aux.subtract(quantity);
         if(aux.compareTo(new BigDecimal("-10.00")) == -1){
             throw new RuntimeException("Error, el cargo a la tarjeta de "+ownerEmail+" supera el saldo de la misma");
         }
@@ -48,6 +49,15 @@ public class CreditCard {
     {
         if(paymentsArchive.add(payment) == false)
             throw new RuntimeException("Error al añadir el nuevo ticket de pago a la tarjeta del cliente "+ownerEmail);
+    }
+
+    public void deletePaymentFromArchive(Integer orderID){
+        for(Payment p : paymentsArchive){
+            if(p.getId() == orderID){
+                paymentsArchive.remove(p);
+                break;
+            }
+        }
     }
 
     public String getOwnerEmail() {
