@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProductController {
 
     @GetMapping("/products")
-    public HashMap<String, List<IProduct>> GetUsers(@RequestParam String cafeteria){
+    public HashMap<String, List<IProduct>> GetProducts(@RequestParam String cafeteria){
         FileProductDAO service = new FileProductDAO(cafeteria);
         return service.getProducts();
     }
