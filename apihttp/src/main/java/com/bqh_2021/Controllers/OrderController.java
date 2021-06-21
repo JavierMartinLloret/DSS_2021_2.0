@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.net.URI;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -17,7 +18,7 @@ import com.bqh_2021.Entidades.Clases.Order;
 import com.bqh_2021.Entidades.Clases.OrderWithUserAndDate;
 import com.bqh_2021.Entidades.Clases.User;
 import com.bqh_2021.Entidades.Interfaces.IProduct;
-import com.bqh_2021.Servicios.SendEmailService;
+import com.bqh_2021.Servicio.SendEmailService;
 
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -27,7 +28,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -140,6 +140,7 @@ public class OrderController {
                     int orderID = Integer.parseInt(j.get("orderID").toString());
                     OrderWithUserAndDate owad = c.getOWUADFromId(user, orderID);
                     assert((balance.subtract(c.getOpenedOrderFormID(user, owad.getOrderID()).getPrice()).compareTo(new BigDecimal("-11")) == 1));
+                    j.put("id", orderID);
                     j.put("payerEmail", user.getEmail());
                     j.put("concept", "Pedido realizado en " + c.getKitchenEmail());
                     j.put("date", owad.getDate().toString());
@@ -169,13 +170,16 @@ public class OrderController {
             if(c.getKitchenEmail().equals(j.get("cafeteria").toString())){
                 try {
                     User user = new User(j.get("user").toString());
-                    long diff = c.getOWUADFromId(user, Integer.parseInt(j.get("orderID").toString())).getDate().getTime() - new Date().getTime();
-                    if(diff < 0 || diff / (60 * 1000) % 60 < 30){
+                    // long diff = c.getClosedOWUADFromId(user, Integer.parseInt(j.get("orderID").toString())).getDate().getTime() - new Date().getTime();
+                    SimpleDateFormat sdfResultMinutos = new SimpleDateFormat("m", Locale.US);
+                    Date difference = getDifferenceBetwenDates(c.getClosedOWUADFromId(user, Integer.parseInt(j.get("orderID").toString())).getDate(),  new Date());
+                    int diff = Integer.valueOf(sdfResultMinutos.format(difference));
+                    System.out.println(diff);
+                    if(diff < 30){
                         return "{\"status\": \"fail\"}";
                     }
                     // Order o = c.getClosedOrderFromId(user, Integer.parseInt(j.get("orderID").toString()));
                     Order o = c.getClosedOrderFromId(user, Integer.parseInt(j.get("orderID").toString()));
-                    System.out.println("kalsdjf");
                     JSONObject request = new JSONObject();
                     request.put("ownerEmail", user.getEmail());
                     request.put("refund", o.getPrice());
@@ -194,6 +198,18 @@ public class OrderController {
             }
         }
         return "{\"status\": \"succes\"}";
+    }
+
+    public static Date getDifferenceBetwenDates(Date dateInicio, Date dateFinal) {
+        long milliseconds = dateFinal.getTime() - dateInicio.getTime();
+        int seconds = (int) (milliseconds / 1000) % 60;
+        int minutes = (int) ((milliseconds / (1000 * 60)) % 60);
+        int hours = (int) ((milliseconds / (1000 * 60 * 60)) % 24);
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.SECOND, seconds);
+        c.set(Calendar.MINUTE, minutes);
+        c.set(Calendar.HOUR_OF_DAY, hours);
+        return c.getTime();
     }
 
 }

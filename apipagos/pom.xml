@@ -6,15 +6,17 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.5.1</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<!-- <relativePath/>  -->
 	</parent>
 	<groupId>com.bqh_2021</groupId>
 	<artifactId>apipagos</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>apipagos</name>
+	<packaging>jar</packaging>
 	<description>API para pagos</description>
 	<properties>
 		<java.version>11</java.version>
+		<start-class>com.bqh_2021.ApipagosApplication</start-class>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -33,6 +35,12 @@
 			<artifactId>negocio</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1.1</version>
+		  </dependency>
 
 		<dependency>
 			<groupId>io.springfox</groupId>
@@ -64,13 +72,31 @@
 		</dependency>
 	</dependencies>
 
-	<build>
+	<!-- <build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
+	</build> -->
+	<build>
+		<plugins>
+		   <plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<fork>true</fork>
+					<mainClass>${start-class}</mainClass>
+				</configuration>
+				  <executions>
+					<execution>
+					  <goals>
+						<goal>repackage</goal>
+					  </goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
 	</build>
-
 </project>

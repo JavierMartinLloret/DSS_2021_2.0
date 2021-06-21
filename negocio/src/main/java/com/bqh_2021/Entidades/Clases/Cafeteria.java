@@ -238,6 +238,21 @@ public class Cafeteria {
         return orderSought;    
     }
 
+    public OrderWithUserAndDate getClosedOWUADFromId(User client, int orderID) throws RuntimeException
+    {
+        List<OrderWithUserAndDate> clientClosedOrders = orderArchive.get(client.getEmail());
+        OrderWithUserAndDate orderSought = null;
+
+        for (OrderWithUserAndDate i : clientClosedOrders){
+            if(i.getOrderID() == orderID){
+                orderSought = i;
+                break;
+            }
+        }       
+
+        return orderSought;    
+    }
+
     /**
      * @author Javier Martín-Lloret
      * @version 1.0

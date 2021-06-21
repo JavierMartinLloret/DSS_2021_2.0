@@ -4,14 +4,11 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Payment{
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     protected Integer id;
     protected String concept;
     protected String payerEmail;
@@ -22,7 +19,8 @@ public class Payment{
 
     public Payment(){}
 
-    public Payment(String concept, String payerEmail, Date dateOfSell, BigDecimal cost, String codeForPayment){
+    public Payment(Integer id, String concept, String payerEmail, Date dateOfSell, BigDecimal cost, String codeForPayment){
+        this.id = id;
         this.concept = concept;
         this.payerEmail = payerEmail;
         this.dateOfSell = dateOfSell;

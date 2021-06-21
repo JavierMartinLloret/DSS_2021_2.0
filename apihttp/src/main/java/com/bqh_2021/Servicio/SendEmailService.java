@@ -1,4 +1,4 @@
-package com.bqh_2021.Servicios;
+package com.bqh_2021.Servicio;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

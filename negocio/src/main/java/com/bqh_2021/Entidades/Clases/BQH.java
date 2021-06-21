@@ -36,7 +36,7 @@ public class BQH {
 
     protected static IFactoryDAO factoryDAO = PersistenceConfiguration.LoadPersistenceType();
 
-    private int idOrderCounter = 0; // Este parámetro debería ser un autoincrementado de la BDD
+    private static int idOrderCounter; // Este parámetro debería ser un autoincrementado de la BDD
 
     // Constructores
     /**

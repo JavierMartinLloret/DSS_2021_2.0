@@ -66,7 +66,7 @@ public class CreditCardController {
         return "{\"status\": \"fail\"}";
     }
 
-    @PutMapping("/refundBalance")
+    @PostMapping("/refundBalance")
     public String refundBalance(@RequestBody String payload) throws ParseException{
         JSONParser jsonParser = new JSONParser();
         Object obj = jsonParser.parse(payload);

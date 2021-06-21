@@ -38,11 +38,7 @@ public class CreditCard {
     public void charge(BigDecimal quantity) throws RuntimeException
     {
         BigDecimal aux = new BigDecimal(balance.toString());
-        System.out.println(aux);
-        aux = aux.subtract(quantity);
-        System.out.println(aux);
         if(aux.compareTo(new BigDecimal("-10.00")) == -1){
-            System.out.println("dentro");
             throw new RuntimeException("Error, el cargo a la tarjeta de "+ownerEmail+" supera el saldo de la misma");
         }
         balance = balance.subtract(quantity);

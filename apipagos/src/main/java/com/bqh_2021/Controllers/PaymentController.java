@@ -48,7 +48,7 @@ public class PaymentController {
         JSONObject j = (JSONObject)obj;
         DateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
         String code =  PaymentCodeGenerator.generateCode();
-        Payment payment = new Payment(j.get("concept").toString(),
+        Payment payment = new Payment(Integer.valueOf(j.get("id").toString()), j.get("concept").toString(),
                                 j.get("payerEmail").toString(),
                                 dateFormat.parse(j.get("date").toString()),
                                 new BigDecimal(j.get("cost").toString()),
