@@ -1,0 +1,134 @@
+[
+    {
+        "prodCategory": "Platos",
+        "price": 3.5,
+        "name": "Espaguetis Carbonara",
+        "stock": 41
+    },
+    {
+        "prodCategory": "Platos",
+        "price": 3.5,
+        "name": "Fritura de Pescado",
+        "stock": 0
+    },
+    {
+        "prodCategory": "Platos",
+        "price": 3.5,
+        "name": "Carne en Salsa",
+        "stock": 50
+    },
+    {
+        "prodCategory": "Tostadas",
+        "price": 1.5,
+        "name": "Tostada de Aceite y Jamón",
+        "stock": 40
+    },
+    {
+        "prodCategory": "Tostadas",
+        "price": 2.7,
+        "name": "Tostada con Aceite, Tomate y Jamón",
+        "stock": 40
+    },
+    {
+        "prodCategory": "Tostadas",
+        "price": 1.0,
+        "name": "Tostada con Mantequilla y Mermelada",
+        "stock": 59
+    },
+    {
+        "prodCategory": "Postres",
+        "price": 2.0,
+        "name": "Tarta de Chocolate",
+        "stock": 19
+    },
+    {
+        "prodCategory": "Postres",
+        "price": 1.0,
+        "name": "Natillas",
+        "stock": 19
+    },
+    {
+        "prodCategory": "Postres",
+        "price": 0.5,
+        "name": "Fruta de Temporada",
+        "stock": 50
+    },
+    {
+        "prodCategory": "Bebidas Calientes",
+        "price": 1.0,
+        "name": "Té",
+        "stock": 80
+    },
+    {
+        "prodCategory": "Bebidas Calientes",
+        "price": 1.0,
+        "name": "Café",
+        "stock": 79
+    },
+    {
+        "prodCategory": "Bebidas Calientes",
+        "price": 1.5,
+        "name": "Chocolate Caliente",
+        "stock": 50
+    },
+    {
+        "prodCategory": "Snacks",
+        "price": 1.0,
+        "name": "Kinder Bueno",
+        "stock": 50
+    },
+    {
+        "prodCategory": "Snacks",
+        "price": 1.0,
+        "name": "Kit Kat",
+        "stock": 50
+    },
+    {
+        "prodCategory": "Snacks",
+        "price": 0.5,
+        "name": "Pelotazos",
+        "stock": 59
+    },
+    {
+        "prodCategory": "Bocadillos",
+        "price": 1.5,
+        "name": "Bocata de Chóped",
+        "stock": 10
+    },
+    {
+        "prodCategory": "Bocadillos",
+        "price": 2.75,
+        "name": "Bacon Queso Huevo",
+        "stock": 20
+    },
+    {
+        "prodCategory": "Bocadillos",
+        "price": 2.0,
+        "name": "Bocadillo de Lomo",
+        "stock": 15
+    },
+    {
+        "prodCategory": "Bocadillos",
+        "price": 2.5,
+        "name": "Sandwitch de Pollo",
+        "stock": 8
+    },
+    {
+        "prodCategory": "Bebidas Frías",
+        "price": 1.0,
+        "name": "Coca-Cola",
+        "stock": 44
+    },
+    {
+        "prodCategory": "Bebidas Frías",
+        "price": 1.7,
+        "name": "Monster",
+        "stock": 8
+    },
+    {
+        "prodCategory": "Bebidas Frías",
+        "price": 0.7,
+        "name": "Agua",
+        "stock": 33
+    }
+]
