@@ -11,6 +11,7 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import com.bqh_2021.ApiApplication;
 import com.bqh_2021.Entidades.Clases.Cafeteria;
@@ -170,12 +171,9 @@ public class OrderController {
             if(c.getKitchenEmail().equals(j.get("cafeteria").toString())){
                 try {
                     User user = new User(j.get("user").toString());
-                    // long diff = c.getClosedOWUADFromId(user, Integer.parseInt(j.get("orderID").toString())).getDate().getTime() - new Date().getTime();
-                    SimpleDateFormat sdfResultMinutos = new SimpleDateFormat("m", Locale.US);
-                    Date difference = getDifferenceBetwenDates(c.getClosedOWUADFromId(user, Integer.parseInt(j.get("orderID").toString())).getDate(),  new Date());
-                    int diff = Integer.valueOf(sdfResultMinutos.format(difference));
-                    System.out.println(diff);
-                    if(diff < 30){
+                    long tempsFinal = System.currentTimeMillis();
+                    long diff = c.getClosedOWUADFromId(user, Integer.parseInt(j.get("orderID").toString())).getDate().getTime() - tempsFinal;
+                    if(TimeUnit.MILLISECONDS.toMinutes(diff) < 30){
                         return "{\"status\": \"fail\"}";
                     }
                     // Order o = c.getClosedOrderFromId(user, Integer.parseInt(j.get("orderID").toString()));
