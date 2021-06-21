@@ -36,7 +36,7 @@ public class OWADTest {
         variableDate.set(Calendar.YEAR, variableDate.get(Calendar.YEAR)-1);
         try {
             owad = new OrderWithUserAndDate(new User(), new Cafeteria("cafeteria@email.com"), variableDate.getTime(), 2);
-        } catch (RuntimeException rECurrentTime) {/*No debería lanzar excepción*/}
+        } catch (RuntimeException rECurrentTime) {throw rECurrentTime;}
 
         owad.getClass(); // Para quitar el Warning
     }

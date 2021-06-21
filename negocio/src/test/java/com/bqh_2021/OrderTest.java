@@ -53,7 +53,7 @@ public class OrderTest {
 
         try {
             order.removeItem(p1, 3);
-        } catch (RuntimeException rE) {/*Erra al solicitar mas retiradas que productos hay*/}
+        } catch (RuntimeException rE) {throw rE;}
 
         order.removeItem(p1, 2);
 

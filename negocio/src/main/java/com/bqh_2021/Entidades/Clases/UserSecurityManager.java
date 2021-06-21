@@ -20,12 +20,13 @@ public class UserSecurityManager {
 
     private static Map<String, SecretKey> user_key;
 
+    /*
     private static final UserSecurityManager SINGLE_INSTANCE = new UserSecurityManager();
 
     public static UserSecurityManager getInstance(){
         return SINGLE_INSTANCE;
     }
-
+    */
     protected static IFactoryDAO factoryDAO = PersistenceConfiguration.LoadPersistenceType();
 
     public UserSecurityManager()

@@ -48,7 +48,7 @@ public class User {
             this.email = email;
         else
             throw new RuntimeException("Error, el email del usuario no cumple el formato *@*.com");
-        this.secManager = UserSecurityManager.getInstance();
+        this.secManager = new UserSecurityManager();
         this.setPassword(password, !isNew);
     }
 

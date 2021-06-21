@@ -1,5 +1,6 @@
 package com.bqh_2021;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import com.bqh_2021.Entidades.Clases.User;
@@ -18,7 +19,7 @@ public class UserTest {
 
         assertTrue(pass_sin_cifrar == user.getPassword());
 
-        UserSecurityManager securityManager = UserSecurityManager.getInstance();
+        UserSecurityManager securityManager = new UserSecurityManager();
 
         securityManager.encryptPasswordAES(user);
 
@@ -33,7 +34,7 @@ public class UserTest {
         try {
             User user = new User(0, "apodo", badEmail, "pass_super_segura", true);
             user.getIsAdult(); //Para quitar el Warning
-        } catch (RuntimeException rE) {}
+        } catch (RuntimeException rE) {throw rE;}
     }
 
     @Test
@@ -42,7 +43,7 @@ public class UserTest {
         User user = new User(0, "apodo", "correo@correo.com", "pass_super_segura", true);
 
         final String correctFormat = user.getEmail()+" "+user.getPassword();
-        assertTrue(correctFormat == user.toString());
+        assertEquals(correctFormat, user.toString());
     }
 
     @Test
