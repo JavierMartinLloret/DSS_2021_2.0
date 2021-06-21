@@ -118,17 +118,26 @@ public class Cafeteria {
 
     public void addToOrder(User client, int orderID, IProduct item, int quantity) throws RuntimeException
     {
-        getOpenedOrderFormID(client, orderID).addItem(item, quantity);
+        if(clientHasThisOrderCurrentlyOppened(client, orderID))
+            bqhSystem.addToOrder(orderID, item, quantity);
+        else
+            throw new RuntimeException("Error. Intentando añadir producto/s a una orden no registrada como abierta");
     }
 
     public void removeFromOrder(User client, int orderID, IProduct item) throws RuntimeException
     {
-        getOpenedOrderFormID(client, orderID).removeItem(item);
+        if(clientHasThisOrderCurrentlyOppened(client, orderID))
+            bqhSystem.removeFromOrder(orderID, item);
+        else
+            throw new RuntimeException("Error. Intentando eliminar un producto de una orden no registrada como abierta");
     }
 
     public void removeFromOrder(User client, int orderID, IProduct item, int quantity) throws RuntimeException
     {
-        getOpenedOrderFormID(client, orderID).removeItem(item, quantity);
+        if(clientHasThisOrderCurrentlyOppened(client, orderID))
+            bqhSystem.removeFromOrder(orderID, item, quantity);
+        else
+            throw new RuntimeException("Error. Intentando eliminar un producto/s de una orden no registrada como abierta");
     }
 
     public void endOrder(User client, int orderID) throws RuntimeException
