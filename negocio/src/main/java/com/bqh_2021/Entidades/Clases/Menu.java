@@ -27,7 +27,7 @@ public class Menu implements IProduct{
      * @since 1.0
      * 
      * @param name name que recibe el producto registrado.
-     * @param discount descuento aplicado al precio final del menu respecto a la compra individual [0,1]
+     * @param discount descuento aplicado al precio final. Vg 0.5f = 50%
      * @param mProducts productos que contendrá el menú
      */
     public Menu(String name, float discount, HashMap<IProduct, Integer> mProducts) {
@@ -39,7 +39,7 @@ public class Menu implements IProduct{
             price = price.add(item.getPrice().multiply(new BigDecimal(this.mProducts.get(item))));
             /* Precio = Precio + preciodelitem x cantidad del item */
         }
-        price = price.multiply(new BigDecimal(1-(discount/100)));
+        price = price.multiply(new BigDecimal(discount));
     }
 
     // Implementación de la interfaz IProduct

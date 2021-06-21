@@ -3,11 +3,9 @@ package com.bqh_2021;
 import static org.junit.Assert.assertEquals;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
 
 import com.bqh_2021.Entidades.Clases.Order;
 import com.bqh_2021.Entidades.Clases.Product;
-import com.bqh_2021.Entidades.Interfaces.IProduct;
 
 import org.junit.Test;
 
