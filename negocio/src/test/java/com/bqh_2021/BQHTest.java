@@ -13,18 +13,19 @@ import org.junit.Test;
 
 
 public class BQHTest {
-    
+    final String emailForTesting = "test@gmail.com";
+
+
     @Test
     public void getProductsTest(){
-        BQH s = new BQH("campus@gmail.com");
+        BQH s = new BQH(emailForTesting);
         HashMap<String, List<IProduct>> c = s.getProducts();
         assert(c != null);
-        
     }
 
     @Test
     public void createOrderTest(){
-        BQH s = new BQH("campus@gmail.com");
+        BQH s = new BQH(emailForTesting);
         int before = s.getLenOrders();
         s.createOrder();
         int after = s.getLenOrders();
@@ -33,7 +34,7 @@ public class BQHTest {
 
     @Test
     public void addToOrderTest() throws RuntimeException{
-        BQH s = new BQH("campus@gmail.com");
+        BQH s = new BQH(emailForTesting);
         int i = s.createOrder();
         Product p = new Product("bocadillo", new BigDecimal("12.20"), 10, "BOCADILLO");
         try{
@@ -45,7 +46,7 @@ public class BQHTest {
 
     @Test(expected = RuntimeException.class)
     public void addToOrderTestFail() throws RuntimeException{
-        BQH s = new BQH("campus@gmail.com");
+        BQH s = new BQH(emailForTesting);
         Product p = new Product("bocadillo", new BigDecimal("12.20"), 10, "BOCADILLO");
         try{
             s.addToOrder(100, p, 2);
@@ -56,7 +57,7 @@ public class BQHTest {
 
     @Test
     public void removeFromOrderAllTest() throws RuntimeException{
-        BQH s = new BQH("campus@gmail.com");
+        BQH s = new BQH(emailForTesting);
         int i = s.createOrder();
         Product p = new Product("bocadillo", new BigDecimal("12.20"), 10, "BOCADILLO");
         s.addToOrder(i, p, 2);
@@ -69,7 +70,7 @@ public class BQHTest {
 
     @Test(expected = RuntimeException.class)
     public void removeFromOrderAllTestFail() throws RuntimeException{
-        BQH s = new BQH("campus@gmail.com");
+        BQH s = new BQH(emailForTesting);
         Product p = new Product("bocadillo", new BigDecimal("12.20"), 10, "BOCADILLO");
         try{
             s.removeFromOrder(100, p);
@@ -80,7 +81,7 @@ public class BQHTest {
 
     @Test
     public void removeFromOrderQtyTest() throws RuntimeException{
-        BQH s = new BQH("campus@gmail.com");
+        BQH s = new BQH(emailForTesting);
         int i = s.createOrder();
         Product p = new Product("bocadillo", new BigDecimal("12.20"), 10, "BOCADILLO");
         s.addToOrder(i, p, 2);
@@ -93,7 +94,7 @@ public class BQHTest {
 
     @Test(expected = RuntimeException.class)
     public void removeFromOrderQtyTestFail() throws RuntimeException{
-        BQH s = new BQH("campus@gmail.com");
+        BQH s = new BQH(emailForTesting);
         Product p = new Product("bocadillo", new BigDecimal("12.20"), 10, "BOCADILLO");
         try{
             s.removeFromOrder(100, p, 3);
@@ -104,7 +105,7 @@ public class BQHTest {
 
     @Test(expected = RuntimeException.class)
     public void endOrderTest() throws RuntimeException{
-        BQH s = new BQH("campus@gmail.com");
+        BQH s = new BQH(emailForTesting);
         int i = s.createOrder();
         s.endOrder(i);
         Product p = new Product("bocadillo", new BigDecimal("12.20"), 10, "BOCADILLO");
@@ -117,7 +118,7 @@ public class BQHTest {
 
     @Test
     public void getOrderFromIdTest() throws RuntimeException{
-        BQH s = new BQH("campus@gmail.com");
+        BQH s = new BQH(emailForTesting);
         int i = s.createOrder();
         try{
             Order o = s.getOrderFromId(i);
@@ -129,7 +130,7 @@ public class BQHTest {
 
     @Test(expected = RuntimeException.class)
     public void getOrderFromIdTestFail() throws RuntimeException{
-        BQH s = new BQH("campus@gmail.com");
+        BQH s = new BQH(emailForTesting);
         try{
             Order o = s.getOrderFromId(100);
             assert(o != null);
