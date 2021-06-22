@@ -21,14 +21,12 @@ public class PropertiesReader {
         try {
             file = new FileInputStream("Resources/config.properties");
         } catch (FileNotFoundException e1) {
-            // TODO Auto-generated catch block
             e1.printStackTrace();
         }
         this.properties = new Properties();
         try {
             this.properties.load(file);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

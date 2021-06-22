@@ -4,7 +4,6 @@ import java.util.Set;
 
 import com.bqh_2021.Entidades.Clases.Order;
 
-//TODO:DOCUMENTAR
 public interface IOrderDAO {
     public Set<Order> getOrders();
     public void postOrders(Set<Order> set);

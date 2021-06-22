@@ -48,7 +48,7 @@ public class Cafeteria {
         orderArchive = cafeteriaDAO.getOrders();
     }
 
-    //TODO: Eliminar la dependencia modificando el sistema
+    //TODO: Produce cierta dependencia estructural. Sería conveniente eliminarlo.
     /**
      * Cafeteria
      * @author Javier Martín-Lloret
@@ -314,7 +314,7 @@ public class Cafeteria {
         return bqhSystem.getOrderFromId(orderID);
     }
 
-    //TODO: Refactor
+    //TODO: Posible refactorización
     public Order getClosedOrderFromId(User client, int orderID) throws RuntimeException
     {
         if(orderArchive.containsKey(client.getEmail()))

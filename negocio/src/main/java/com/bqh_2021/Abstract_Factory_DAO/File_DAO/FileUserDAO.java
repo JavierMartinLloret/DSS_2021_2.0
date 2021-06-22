@@ -14,8 +14,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-//TODO: DOCUMENTAR
-
 public class FileUserDAO implements IUserDAO{
 
     protected File f = new File(PropertiesReader.getInstance().getProperty("user.file"));
