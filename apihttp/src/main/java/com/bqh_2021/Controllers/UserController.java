@@ -4,8 +4,10 @@ import java.util.Set;
 
 import com.bqh_2021.Abstract_Factory_DAO.File_DAO.FileUserDAO;
 import com.bqh_2021.Entidades.Clases.User;
-import com.bqh_2021.Requests.UserRequest;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -24,10 +26,13 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public String PostUsers(@RequestBody UserRequest user){
+    public String PostUsers(@RequestBody String payload) throws ParseException{
+        JSONParser jsonParser = new JSONParser();
+        Object obj = jsonParser.parse(payload);
+        JSONObject j = (JSONObject)obj;
         Set<User> s = service.getUsers();
         try {
-            s.add(new User(user.getNickname(), user.getEmail(), user.getPassword(), user.getIsAdult(), true));
+            s.add(new User(j.get("nickname").toString(), j.get("email").toString(), j.get("password").toString(), Boolean.parseBoolean(j.get("isAdult").toString()), true));
         } catch (RuntimeException rE) {
             return "{\"status\": \"fail\",\"error\": \"" + rE + "\"}";
         }
@@ -36,17 +41,20 @@ public class UserController {
     }
 
     @PutMapping("/users")
-    public String PutUser(@RequestBody UserRequest user){
+    public String PutUser(@RequestBody String payload) throws ParseException{
+        JSONParser jsonParser = new JSONParser();
+        Object obj = jsonParser.parse(payload);
+        JSONObject j = (JSONObject)obj;
         Set<User> s = service.getUsers();
         for(User u: s){
-            if(u.getEmail().equals(user.getEmail())){
+            if(u.getEmail().equals(j.get("email").toString())){
                 try {
-                    u.setPassword(user.getPassword(), false);
+                    u.setPassword(j.get("password").toString(), false);
                 } catch (RuntimeException rE) {
                     return "{\"status\": \"fail\",\"error\": \"" + rE + "\"}";
                 }
-                u.setNickname(user.getNickname());
-                u.setIsAdult(user.getIsAdult());
+                u.setNickname(j.get("nickname").toString());
+                u.setIsAdult(Boolean.parseBoolean(j.get("isAdult").toString()));
                 break;
             }
         }
