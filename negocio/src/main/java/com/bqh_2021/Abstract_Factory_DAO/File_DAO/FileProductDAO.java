@@ -6,7 +6,9 @@ import java.io.FileWriter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.bqh_2021.Abstract_Factory_DAO.Interfaces.IProductDAO;
 import com.bqh_2021.Entidades.Clases.Menu;
@@ -34,35 +36,53 @@ public class FileProductDAO implements IProductDAO{
         try (FileReader reader = new FileReader(f)){
             Object obj = jsonParser.parse(reader);
             JSONArray productsArray = (JSONArray) obj;
+            Set<Object> menus = new HashSet<Object>();
+            IProduct product = new Product();
             for(Object o: productsArray){
                 JSONObject p = (JSONObject) o;
                 String category = (String)p.get("prodCategory");
-                IProduct product;
-                if(category.equals("Menu")){
-                    JSONObject items = (JSONObject)p.get("products");
-                    HashMap<IProduct, Integer> mapProd = new HashMap<IProduct, Integer>();
-                    Product itemAux;
-                    for(Object i: items.keySet()){
-                        String prod = i.toString();
-                        prod = prod.replaceAll("[()€]", "");
-                        String[] pr = prod.split(" ");
-                        int size = pr.length;
-                        String name = "";
-                        for(int j=0; j<size-1; j++){
-                            name = name.concat(pr[j]);
-                            name = name.concat(" ");
-                        }
-                        itemAux = new Product(name, new BigDecimal(pr[size-1].toString()));
-                        mapProd.put(itemAux, Integer.parseInt(items.get(i).toString()));
-                    }
-                    product = new Menu((String)p.get("name"), Float.parseFloat(p.get("discount").toString()), mapProd);
-                }
-                else{
-                    product = new Product((String)p.get("name"), new BigDecimal(p.get("price").toString()), ((Number)p.get("stock")).intValue(), category);
-                }
                 if(!map.containsKey(category)){
                     map.put(category, new ArrayList<IProduct>());
                 }
+                if(category.equals("Menu")){
+                    menus.add(o);
+                }
+                else{
+                    product = new Product((String)p.get("name"), new BigDecimal(p.get("price").toString()), ((Number)p.get("stock")).intValue(), category);
+                    map.get(category).add(product);
+                }
+            }
+            String category = "Menu";
+            if(!map.containsKey(category)){
+                map.put(category, new ArrayList<IProduct>());
+            }
+            for(Object o: menus){
+                JSONObject j = (JSONObject) o;
+                JSONObject items = (JSONObject)j.get("products");
+                HashMap<IProduct, Integer> mapProd = new HashMap<IProduct, Integer>();
+                IProduct itemAux = new Product();
+                for(Object i: items.keySet()){
+                    String prod = i.toString();
+                    prod = prod.replaceAll("[()€]", "");
+                    String[] pr = prod.split(" ");
+                    int size = pr.length;
+                    String name = "";
+                    for(int d=0; d<size-1; d++){
+                        name = name.concat(pr[d]);
+                        name = name.concat(" ");
+                    }
+                    name = name.substring(0, name.length()-1);
+                    for(String c: map.keySet()){
+                        for(IProduct pro: map.get(c)){
+                            if(pro.getName().equals(name)){
+                                itemAux = pro;
+                                break;
+                            }
+                        }
+                    }
+                    mapProd.put(itemAux, Integer.parseInt(items.get(i).toString()));
+                }
+                product = new Menu((String)j.get("name"), Float.parseFloat(j.get("discount").toString()), mapProd);
                 map.get(category).add(product);
             }  
             reader.close();

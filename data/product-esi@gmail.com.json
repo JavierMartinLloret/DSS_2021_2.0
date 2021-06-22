@@ -3,19 +3,19 @@
         "prodCategory": "Platos",
         "price": 3.5,
         "name": "Espaguetis Carbonara",
-        "stock": 0
+        "stock": 41
     },
     {
         "prodCategory": "Platos",
         "price": 3.5,
         "name": "Fritura de Pescado",
-        "stock": 0
+        "stock": 50
     },
     {
         "prodCategory": "Platos",
         "price": 3.5,
         "name": "Carne en Salsa",
-        "stock": 1
+        "stock": 50
     },
     {
         "prodCategory": "Tostadas",
@@ -27,7 +27,7 @@
         "prodCategory": "Tostadas",
         "price": 2.7,
         "name": "Tostada con Aceite, Tomate y Jamón",
-        "stock": 10
+        "stock": 40
     },
     {
         "prodCategory": "Tostadas",
@@ -39,19 +39,19 @@
         "prodCategory": "Postres",
         "price": 2.0,
         "name": "Tarta de Chocolate",
-        "stock": 19
+        "stock": 50
     },
     {
         "prodCategory": "Postres",
         "price": 1.0,
         "name": "Natillas",
-        "stock": 19
+        "stock": 50
     },
     {
         "prodCategory": "Postres",
         "price": 0.5,
         "name": "Fruta de Temporada",
-        "stock": 49
+        "stock": 50
     },
     {
         "prodCategory": "Bebidas Calientes",
@@ -93,42 +93,62 @@
         "prodCategory": "Bocadillos",
         "price": 1.5,
         "name": "Bocata de Chóped",
-        "stock": 10
+        "stock": 50
     },
     {
         "prodCategory": "Bocadillos",
         "price": 2.75,
         "name": "Bacon Queso Huevo",
-        "stock": 17
+        "stock": 50
     },
     {
         "prodCategory": "Bocadillos",
         "price": 2.0,
         "name": "Bocadillo de Lomo",
-        "stock": 15
+        "stock": 50
     },
     {
         "prodCategory": "Bocadillos",
         "price": 2.5,
         "name": "Sandwitch de Pollo",
-        "stock": 6
+        "stock": 50
     },
     {
         "prodCategory": "Bebidas Frías",
         "price": 1.0,
         "name": "Coca-Cola",
-        "stock": 42
+        "stock": 44
     },
     {
         "prodCategory": "Bebidas Frías",
         "price": 1.7,
         "name": "Monster",
-        "stock": 2
+        "stock": 50
     },
     {
         "prodCategory": "Bebidas Frías",
         "price": 0.7,
         "name": "Agua",
-        "stock": 21
+        "stock": 50
+    },
+    {
+        "prodCategory": "Menu",
+        "discount": 20,
+        "name": "Bocata Monster",
+        "products": {
+            "Monster (1.7\u20AC)": 1,
+            "Bacon Queso Huevo (2.75\u20AC)": 1,
+            "Tarta de Chocolate (2.0\u20AC)": 1
+        }
+    },
+    {
+        "prodCategory": "Menu",
+        "discount": 20,
+        "name": "Pescaito Frito",
+        "products": {
+            "Agua (0.7\u20AC)": 1,
+            "Fritura de Pescado (3.5\u20AC)": 1,
+            "Tarta de Chocolate (2.0\u20AC)": 1
+        }
     }
 ]

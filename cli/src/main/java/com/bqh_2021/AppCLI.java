@@ -13,10 +13,12 @@ import com.bqh_2021.Entidades.Clases.BQH;
 
 public class AppCLI 
 {
+
+    public static BQH BqhSystem;
     public static void main( String[] args )
     {
         Scanner IO = new Scanner(System.in);
-        BQH BqhSystem = new BQH("esi@gmail.com"); // Se crea un sistema de 0.
+        BqhSystem = new BQH("esi@gmail.com"); // Se crea un sistema de 0.
         CLIMenus ClienteCLI = new CLIMenus(IO, BqhSystem);
         ClienteCLI.startCLI();
     }

@@ -2,6 +2,7 @@ package com.bqh_2021.Entidades.Clases;
 
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -39,7 +40,8 @@ public class Menu implements IProduct{
             price = price.add(item.getPrice().multiply(new BigDecimal(this.mProducts.get(item))));
             /* Precio = Precio + preciodelitem x cantidad del item */
         }
-        price = price.multiply(new BigDecimal(discount));
+        price = price.multiply(new BigDecimal(1 - (discount/100)));
+        price = price.setScale(2, RoundingMode.FLOOR);
     }
 
     // Implementación de la interfaz IProduct
