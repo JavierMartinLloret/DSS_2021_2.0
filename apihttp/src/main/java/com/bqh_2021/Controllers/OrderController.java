@@ -79,10 +79,15 @@ public class OrderController {
         int orderID = 0;
         for(Cafeteria c: ApiApplication.cafeterias){
             if(c.getKitchenEmail().equals(j.get("cafeteria").toString())){
-                DateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
-                User u = new User(j.get("user").toString());
-                orderID = c.createNewOrder(u, dateFormat.parse(j.get("date").toString()));
-                break;
+                try{
+                    DateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
+                    User u = new User(j.get("user").toString());
+                    orderID = c.createNewOrder(u, dateFormat.parse(j.get("date").toString()));
+                    break;
+                }catch(RuntimeException e){
+                    return "{\"status\": \"fail\",\"error\": \"" + e + "\"}";
+                }
+                
             }
         }
         return "{\"orderID\": \"" + orderID + "\"}";
@@ -176,7 +181,7 @@ public class OrderController {
                     long tempsFinal = System.currentTimeMillis();
                     long diff = c.getClosedOWUADFromId(user, Integer.parseInt(j.get("orderID").toString())).getDate().getTime() - tempsFinal;
                     if(TimeUnit.MILLISECONDS.toMinutes(diff) < 30){
-                        return "{\"status\": \"fail\"}";
+                        return "{\"status\": \"fail\", \"error\": \"No se puede cancelar cuando quedan menos de 30 minutos\"}";
                     }
                     // Order o = c.getClosedOrderFromId(user, Integer.parseInt(j.get("orderID").toString()));
                     Order o = c.getClosedOrderFromId(user, Integer.parseInt(j.get("orderID").toString()));

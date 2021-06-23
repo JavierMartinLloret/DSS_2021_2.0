@@ -16,6 +16,9 @@ public class DayBoxController {
     public String GetDayBox(@RequestParam String cafeteria){
         FileDayBoxDAO service = new FileDayBoxDAO(cafeteria);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/YYYY");
-        return "{\"dayliBox\": \"" + service.getDayBox().get(simpleDateFormat.format(new Date())).toString() + "\"}";
+        if(service.getDayBox().containsKey(simpleDateFormat.format(new Date()))){
+            return "{\"dayliBox\": \"" + service.getDayBox().get(simpleDateFormat.format(new Date())).toString() + "\"}";
+        }
+        return "{\"dayliBox\": 0.0}";
     }
 }
